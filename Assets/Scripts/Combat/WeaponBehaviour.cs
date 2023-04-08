@@ -18,7 +18,7 @@ namespace SniperProject
         {
             myHomingSignal = GetComponent<HomingSignal>();
 
-            //StartCoroutine(FireWeaponCoroutine());
+            StartCoroutine(FireWeaponCoroutine());
         }
 
         private void FireBullet()

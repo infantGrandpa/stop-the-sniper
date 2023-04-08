@@ -30,7 +30,7 @@ namespace SniperProject
         private void Start()
         {
             waitForNextSpawn = new WaitForSeconds(secsBetweenSpawns);
-            //StartCoroutine(WaitOnStartCoroutine());
+            StartCoroutine(WaitOnStartCoroutine());
         }
 
         private IEnumerator WaitOnStartCoroutine()
