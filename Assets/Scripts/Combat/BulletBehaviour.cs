@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace SniperProject
 {
     public class BulletBehaviour : MonoBehaviour
     {
         private TargetBehaviour myTarget;
-        [SerializeField] float moveSpeed;
-        [SerializeField] float maxRotationSpeed;
+        public float moveSpeed;
+        public float maxRotationSpeed;
 
         public void InitBullet(TargetBehaviour newTarget)
         {
             myTarget = newTarget;
+            myTarget.OnInvalid.AddListener(ClearTarget);
         }
 
         private void Update()
@@ -38,6 +40,21 @@ namespace SniperProject
         {
             float movementThisFrame = moveSpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, transform.position + transform.right, movementThisFrame);
+        }
+
+        private void ClearTarget()
+        {
+            myTarget.OnInvalid.RemoveListener(ClearTarget);
+            myTarget = null;
+        }
+
+        private void OnDestroy()
+        {
+            if (myTarget == null)
+            {
+                return;
+            }
+            myTarget.OnInvalid.RemoveListener(ClearTarget);
         }
     }
 }

@@ -23,6 +23,8 @@ namespace SniperProject
         private static SpawnController instance;
 
         public List<SpawnerBehaviour> spawners = new();
+        public List<Waypoint> waypoints = new();
+
 
         [SerializeField] float secsBetweenSpawns;
         private WaitForSeconds waitForNextSpawn;
@@ -41,6 +43,11 @@ namespace SniperProject
 
         private IEnumerator SpawnTargetCoroutine()
         {
+
+            if (spawners.Count == 0)
+            {
+                yield break;
+            }
 
             bool spawnSuccess = false;
             int attempts = 0;
@@ -90,12 +97,22 @@ namespace SniperProject
 
         private SpawnerBehaviour ChooseRandomSpawner()
         {
+            if (spawners.Count == 0)
+            {
+                return null;
+            }
+
             int chosenIndex = Random.Range(0, spawners.Count);
             return spawners[chosenIndex];
         }
 
         private SpawnerBehaviour GetFirstUnoccupiedSpawner()
         {
+            if (spawners.Count == 0)
+            {
+                return null;
+            }
+
             SpawnerBehaviour unoccupiedSpawner = null;
             foreach (SpawnerBehaviour thisSpawner in spawners)
             {
@@ -109,6 +126,16 @@ namespace SniperProject
             }
 
             return unoccupiedSpawner;
+        }
+
+        public Waypoint GetRandomWaypoint()
+        {
+            if (waypoints.Count == 0) {
+                return null;
+            }
+
+            int chosenIndex = Random.Range(0, waypoints.Count);
+            return waypoints[chosenIndex];
         }
     }
 }

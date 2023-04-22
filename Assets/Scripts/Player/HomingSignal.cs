@@ -91,7 +91,7 @@ namespace SniperProject
             Vector3 closestPoint = linePointA + projectedVector;
             float distance = Vector3.Distance(targetPosition, closestPoint);
 
-            Debug.DrawLine(targetPosition, closestPoint, Color.green);
+            Debug.DrawLine(targetPosition, closestPoint, Color.red);
             return distance;
         }
 

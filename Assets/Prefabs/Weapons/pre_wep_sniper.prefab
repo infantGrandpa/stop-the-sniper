@@ -135,6 +135,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 503359060256427780, guid: acd8ef1a534ee584b89f055cd5b03ceb, type: 3}
   secsBetweenShots: 1
   bulletSpawnTransform: {fileID: 4382250394207521981}
+  canFire: 1
 --- !u!114 &1628408729
 MonoBehaviour:
   m_ObjectHideFlags: 0
