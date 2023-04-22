@@ -2739,6 +2739,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 1793576604}
   unarmedColor: {r: 0.072806716, g: 1, b: 0, a: 1}
   armedColor: {r: 1, g: 0, b: 0, a: 1}
+  secsToReset: 0.25
 --- !u!1001 &3998439526263055623
 PrefabInstance:
   m_ObjectHideFlags: 0

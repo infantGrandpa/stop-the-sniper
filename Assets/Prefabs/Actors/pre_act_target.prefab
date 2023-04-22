@@ -309,7 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRange: {x: -0.172, y: 0.23}
   secsToComplete: 1.5
-  easeType: 16
+  easeType: 4
   loopTween: 1
 --- !u!1 &8772348121238793642
 GameObject:
@@ -410,5 +410,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatedScale: {x: 0.5760252, y: 0.10921}
   secsToComplete: 1.5
-  easeType: 16
+  easeType: 4
   loopTween: 1

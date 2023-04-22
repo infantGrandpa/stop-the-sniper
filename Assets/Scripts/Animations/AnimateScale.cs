@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace SniperProject
 {
@@ -10,11 +11,13 @@ namespace SniperProject
         [SerializeField] Vector2 animatedScale;
         [ValidateInput("ValidateGreaterThan0", "Seconds to complete should be more than 0", InfoMessageType.Warning)]
         [SerializeField] float secsToComplete;
-        [SerializeField] LeanTweenType easeType;
+        [SerializeField] Ease easeType;
         [SerializeField] bool loopTween = true;
 
         private Vector2 startScale;
         private Vector2 lastScale;
+
+        private Tweener currentTween;
 
         private void Start()
         {
@@ -31,11 +34,12 @@ namespace SniperProject
         private void StartNewTween()
         {
             Vector2 targetScale = GetNewScale();
-            LTDescr tween = LeanTween.scale(gameObject, targetScale, secsToComplete);
-            tween.setEase(easeType);
+            currentTween = transform.DOScale(targetScale, secsToComplete);
+            currentTween.SetEase(easeType);
+
             if (loopTween)
             {
-                tween.setOnComplete(StartNewTween);
+                currentTween.OnComplete(StartNewTween);
             }
 
             lastScale = targetScale;
@@ -51,6 +55,11 @@ namespace SniperProject
 
             return animatedScale;
 
+        }
+
+        private void OnDestroy()
+        {
+            currentTween.Kill(false);
         }
 
         private bool ValidateGreaterThan0(float value)
