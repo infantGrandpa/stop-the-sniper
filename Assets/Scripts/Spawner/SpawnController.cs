@@ -29,16 +29,28 @@ namespace SniperProject
         [SerializeField] float secsBetweenSpawns;
         private WaitForSeconds waitForNextSpawn;
 
+        private Coroutine spawnCoroutine;
+
         private void Start()
         {
             waitForNextSpawn = new WaitForSeconds(secsBetweenSpawns);
-            StartCoroutine(WaitOnStartCoroutine());
+            spawnCoroutine = StartCoroutine(WaitOnStartCoroutine());
+        }
+
+        public void PauseSpawners()
+        {
+            StopCoroutine(spawnCoroutine);
+        }
+
+        public void ResumeSpawners()
+        {
+            spawnCoroutine = StartCoroutine(WaitOnStartCoroutine());
         }
 
         private IEnumerator WaitOnStartCoroutine()
         {
             yield return waitForNextSpawn;
-            StartCoroutine(SpawnTargetCoroutine());
+            spawnCoroutine = StartCoroutine(SpawnTargetCoroutine());
         }
 
         private IEnumerator SpawnTargetCoroutine()
@@ -66,7 +78,7 @@ namespace SniperProject
             }
 
             yield return waitForNextSpawn;
-            StartCoroutine(SpawnTargetCoroutine());
+            spawnCoroutine = StartCoroutine(SpawnTargetCoroutine());
 
         }
 

@@ -8,6 +8,8 @@ namespace SniperProject
     {
         public static float maxDistanceInLevel = 500f;
 
+        public static MainCanvasBehaviour mainCanvasBehaviour;
+
         public static int targetLayerMaskInt = LayerMask.GetMask("Targets");
     }
 }

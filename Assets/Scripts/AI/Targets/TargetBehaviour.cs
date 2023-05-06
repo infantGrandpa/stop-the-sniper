@@ -18,14 +18,8 @@ namespace SniperProject
 
         public void MarkTargetValid()
         {
-            if (LevelManager.Instance == null)
+            if (IsTargetValid())        //Return if already validated
             {
-                return;
-            }
-
-            if (LevelManager.Instance.targets.Contains(this))
-            {
-                //Already validated
                 return;
             }
 
@@ -34,7 +28,7 @@ namespace SniperProject
 
         public void MarkTargetInvalid()
         {
-            if (LevelManager.Instance == null)
+            if (!IsTargetValid())        //Return if already invalidated
             {
                 return;
             }
@@ -43,7 +37,24 @@ namespace SniperProject
             LevelManager.Instance.targets.Remove(this);
         }
 
-        
+        public bool IsTargetValid()
+        {
+            if (LevelManager.Instance == null)
+            {
+                return false;
+            }
 
+            if (LevelManager.Instance.targets.Contains(this))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void IncreaseLostSoulCountOnDeath()
+        {
+            WaveManager.Instance.IncreaseLostSouls();
+        }
     }
 }

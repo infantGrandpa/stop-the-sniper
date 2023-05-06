@@ -1,32 +1,33 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SniperProject
 {
-    [RequireComponent(typeof (HomingSignal))]
     public class WeaponBehaviour : MonoBehaviour
     {
         public GameObject bulletPrefab;
         [SerializeField] float secsBetweenShots;
         [SerializeField] Transform bulletSpawnTransform;
-        [SerializeField] bool canFire;
+        [SerializeField] bool pauseFiringForDebug;
 
-        private HomingSignal myHomingSignal;
-        private LineRendererColor rendererColor;
-
+        private WeaponAnimationController animationController;
+        [SerializeField] UnityEvent onFireEvent;
 
         private void Start()
         {
-            myHomingSignal = GetComponent<HomingSignal>();
-            rendererColor = GetComponent<LineRendererColor>();
-
+            animationController = GetComponent<WeaponAnimationController>();
             StartCoroutine(FireWeaponCoroutine());
         }
 
         private void FireBullet()
         {
-            if (!canFire)
+            if (pauseFiringForDebug)
+            {
+                return;
+            }
+
+            if (PlayerBehaviour.Instance.PlayerHomingSignal == null)
             {
                 return;
             }
@@ -42,25 +43,30 @@ namespace SniperProject
             bulletTransform.position = bulletSpawnTransform.position;
 
             bulletTransform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
-            bulletBehaviour.InitBullet(myHomingSignal.CurrentTarget);
+            bulletBehaviour.InitBullet(PlayerBehaviour.Instance.PlayerHomingSignal.CurrentTarget);
 
-            if (rendererColor != null)
+            onFireEvent?.Invoke();
+
+            if (animationController != null)
             {
-                rendererColor.ResetLineColor();
+                animationController.ResetAnimations();
             }
         }
 
         private IEnumerator FireWeaponCoroutine()
         {
-            if (rendererColor != null)
+            if (animationController != null)
             {
-                rendererColor.TweenLineColor(secsBetweenShots);
+                animationController.StartAnimationsAfterReset(secsBetweenShots);
             }
-            yield return new WaitForSeconds(secsBetweenShots);
+
+            yield return new WaitForSeconds(secsBetweenShots); ;
             FireBullet();
 
             StartCoroutine(FireWeaponCoroutine());
         }
+
+
     }
 
 }

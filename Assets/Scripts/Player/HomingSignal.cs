@@ -12,8 +12,7 @@ namespace SniperProject
 
         public TargetBehaviour CurrentTarget { get; private set; }
 
-
-        private void LateUpdate()
+        private void Update()
         {
             CalculateClosestTarget();
         }
@@ -52,8 +51,12 @@ namespace SniperProject
                 return false;
             }
 
-            SetCurrentTarget(hitTarget);
+            if (!hitTarget.IsTargetValid())
+            {
+                return false;
+            }
 
+            SetCurrentTarget(hitTarget);
             return true;
         }
 

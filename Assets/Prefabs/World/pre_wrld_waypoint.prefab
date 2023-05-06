@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556306124013736733}
   - component: {fileID: 556306124013736732}
-  - component: {fileID: 8734042934482615097}
+  - component: {fileID: 1384896662375938582}
   m_Layer: 0
   m_Name: pre_wrld_waypoint
   m_TagString: Untagged
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextWaypoint: {fileID: 0}
---- !u!114 &8734042934482615097
+--- !u!114 &1384896662375938582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,6 +55,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 556306124013736728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a715f1f2e2ae647baa9776a59bd22b, type: 3}
+  m_Script: {fileID: 11500000, guid: e6a60c64950e7b84e9d77cd0c234fa72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

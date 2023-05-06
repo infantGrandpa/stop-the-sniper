@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1599892261}
   - component: {fileID: 1599892266}
   - component: {fileID: 1599892267}
+  - component: {fileID: 8582058135207416542}
   m_Layer: 7
   m_Name: pre_act_target
   m_TagString: Untagged
@@ -70,6 +71,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+  destroyOn0Health: 1
+  onDeathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6746863331867592820}
+        m_TargetAssemblyTypeName: SniperProject.TargetBehaviour, Assembly-CSharp
+        m_MethodName: IncreaseLostSoulCountOnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8582058135207416542}
+        m_TargetAssemblyTypeName: Cinemachine.CinemachineImpulseSource, Cinemachine
+        m_MethodName: GenerateImpulse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &8901867755729888903
 Rigidbody2D:
   serializedVersion: 4
@@ -90,7 +119,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &4430833993784769276
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -210,6 +239,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed8ed7bb0ad97149bac95c6fdd48638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8582058135207416542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215140654377464896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 4
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0.45, y: 0.45, z: 0}
 --- !u!1 &6369616272950928252
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6369616272950928252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.172, y: 0.106, z: 0}
+  m_LocalPosition: {x: -0.172, y: -0.024, z: 0}
   m_LocalScale: {x: 0.19111998, y: 0.19111998, z: 0.19111998}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -307,10 +389,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b4f5d181fec694eab1873052ff2276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveRange: {x: -0.172, y: 0.23}
-  secsToComplete: 1.5
+  secsToComplete: 0.6
   easeType: 4
-  loopTween: 1
+  pingPongTween: 1
+  tweenAtStart: 1
+  tweenOffset: {x: 0, y: 0.1}
 --- !u!1 &8772348121238793642
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 804926057791343938}
   - component: {fileID: 3860686584296095579}
-  - component: {fileID: 1997918731}
+  - component: {fileID: 2148353445059880771}
   m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
@@ -337,8 +420,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8772348121238793642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1344, y: -0.456, z: 0}
-  m_LocalScale: {x: 0.66389346, y: 0.11247, z: 1}
+  m_LocalPosition: {x: -0.1344, y: -0.586, z: 0}
+  m_LocalScale: {x: 0.73, y: 0.11247, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 926625306848905272}
@@ -396,7 +479,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1997918731
+--- !u!114 &2148353445059880771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -405,10 +488,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8772348121238793642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0203e71764e2139488cf51f60da6719c, type: 3}
+  m_Script: {fileID: 11500000, guid: 24d57b9b4cff9e840bc80b304bed7575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatedScale: {x: 0.5760252, y: 0.10921}
-  secsToComplete: 1.5
+  secsToComplete: 0.6
   easeType: 4
-  loopTween: 1
+  pingPongTween: 1
+  tweenAtStart: 1
+  animatedScale: {x: 0.5760252, y: 0.10921}

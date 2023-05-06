@@ -25,10 +25,15 @@ namespace SniperProject
         public List<TargetBehaviour> targets = new();
 
         public Transform DynamicTransform { get; private set; }
+        public TargetReticleController TargetReticleController { get; private set; }
+        public Camera MainCamera { get; private set; }
 
         private void Awake()
         {
             DynamicTransform = GameObject.Find("_Dynamic").transform;
+            TargetReticleController = GetComponent<TargetReticleController>();
+            MainCamera = Camera.main;
+
         }
 
         public GameObject InstantiateObjectOnDyanmicTransform(GameObject original)

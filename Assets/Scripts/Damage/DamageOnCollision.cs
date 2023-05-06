@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SniperProject
 {
@@ -10,6 +9,8 @@ namespace SniperProject
         [SerializeField] int damageToTakeOnCollision = 0;
 
         private HealthSystem myHealthSystem;
+
+        [SerializeField] UnityEvent onDamageEvent;
 
         private void Start()
         {
@@ -30,6 +31,7 @@ namespace SniperProject
 
             damageableObject.Damage(damageOnCollision);
             DamageSelf();
+            onDamageEvent?.Invoke();
         }
 
         private void DamageSelf()

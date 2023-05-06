@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SniperProject
 {
     public class HealthSystem : MonoBehaviour, IDamageable
     {
         [SerializeField] int maxHealth;
+        [SerializeField] bool destroyOn0Health = true;
         public float CurrentHealth { get; private set; }
+
+        [SerializeField] UnityEvent onDeathEvent;
+
 
         private void Start()
         {
@@ -26,7 +29,12 @@ namespace SniperProject
 
         private void Die()
         {
-            Destroy(gameObject);
+            onDeathEvent?.Invoke();
+
+            if (destroyOn0Health)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

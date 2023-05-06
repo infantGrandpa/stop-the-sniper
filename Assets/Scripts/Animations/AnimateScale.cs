@@ -1,49 +1,47 @@
-using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
 namespace SniperProject
 {
-    public class AnimateScale : MonoBehaviour
+    public class AnimateScale : AnimationBehaviour
     {
         [SerializeField] Vector2 animatedScale;
-        [ValidateInput("ValidateGreaterThan0", "Seconds to complete should be more than 0", InfoMessageType.Warning)]
-        [SerializeField] float secsToComplete;
-        [SerializeField] Ease easeType;
-        [SerializeField] bool loopTween = true;
 
         private Vector2 startScale;
         private Vector2 lastScale;
 
-        private Tweener currentTween;
+        private Vector2 targetScale;
 
-        private void Start()
+
+        private void Awake()
         {
-            if (animatedScale == Vector2.zero)
-            {
-                return;
-            }
-
             startScale = transform.localScale;
             lastScale = startScale;
-            StartNewTween();
         }
 
-        private void StartNewTween()
+        public override void StartNewTween(float newSecsToComplete = 0f)
         {
-            Vector2 targetScale = GetNewScale();
-            currentTween = transform.DOScale(targetScale, secsToComplete);
+            targetScale = GetNewScale();
+            base.StartNewTween(newSecsToComplete);
+            lastScale = targetScale;
+        }
+
+        public override void ResetTween(float secsToReset)
+        {
+            targetScale = startScale;
+            base.ResetTween(secsToReset);
+            lastScale = startScale;
+        }
+
+        protected override void Tween(float secsToCompleteTween)
+        {
+            currentTween = transform.DOScale(targetScale, secsToCompleteTween);
             currentTween.SetEase(easeType);
 
-            if (loopTween)
+            if (pingPongTween)
             {
-                currentTween.OnComplete(StartNewTween);
+                currentTween.OnComplete(PingPongTween);
             }
-
-            lastScale = targetScale;
-
         }
 
         private Vector2 GetNewScale()
@@ -55,16 +53,6 @@ namespace SniperProject
 
             return animatedScale;
 
-        }
-
-        private void OnDestroy()
-        {
-            currentTween.Kill(false);
-        }
-
-        private bool ValidateGreaterThan0(float value)
-        {
-            return value > 0f;
         }
     }
 }
