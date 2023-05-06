@@ -197,8 +197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1598ce712a5014b85275ca4620c64a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secsBetweenWaves: 5
   listOfWaves:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 74a7ed48ed1adc04897a24dbf16b9136, type: 2}
+  - {fileID: 11400000, guid: 51d20a8e4f18e164fbd770b6f063f95b, type: 2}
+  - {fileID: 11400000, guid: 1e6cadb572ab04b4c9e937b6fc3405c8, type: 2}
 --- !u!1 &177669350
 GameObject:
   m_ObjectHideFlags: 0
