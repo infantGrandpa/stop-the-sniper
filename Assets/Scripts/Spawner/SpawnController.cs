@@ -6,6 +6,7 @@ namespace SniperProject
 {
     public class SpawnController : MonoBehaviour
     {
+        #region Properties and Variables
         public static SpawnController Instance
         {
             get
@@ -25,20 +26,34 @@ namespace SniperProject
         public List<SpawnerBehaviour> spawners = new();
         public List<Waypoint> waypoints = new();
 
-
-        [SerializeField] float secsBetweenSpawns;
-        private WaitForSeconds waitForNextSpawn;
-
         private Coroutine spawnCoroutine;
 
-        private void Start()
+        private WaveScriptableObject currentWave;
+        private int unitsSpawnedThisWave;
+
+        #endregion
+
+        #region Spawner Control
+        public void LoadNewWave(WaveScriptableObject newWave)
         {
-            waitForNextSpawn = new WaitForSeconds(secsBetweenSpawns);
-            spawnCoroutine = StartCoroutine(WaitOnStartCoroutine());
+            currentWave = newWave;
+            unitsSpawnedThisWave = 0;
+            ResumeSpawners();
+        }
+
+        private void WaveComplete()
+        {
+            WaveManager.Instance.WaveComplete();
+            PauseSpawners();
         }
 
         public void PauseSpawners()
         {
+            if (spawnCoroutine == null)
+            {
+                return;
+            }
+
             StopCoroutine(spawnCoroutine);
         }
 
@@ -47,17 +62,25 @@ namespace SniperProject
             spawnCoroutine = StartCoroutine(WaitOnStartCoroutine());
         }
 
+        #endregion
+
+        #region Spawn Helpers
         private IEnumerator WaitOnStartCoroutine()
         {
-            yield return waitForNextSpawn;
+            yield return new WaitForSeconds(GetSecsBeforeNextSpawn());
             spawnCoroutine = StartCoroutine(SpawnTargetCoroutine());
         }
 
         private IEnumerator SpawnTargetCoroutine()
         {
-
             if (spawners.Count == 0)
             {
+                yield break;
+            }
+
+            if (unitsSpawnedThisWave >= currentWave.soulsToSpawn)
+            {
+                WaveComplete();
                 yield break;
             }
 
@@ -77,7 +100,9 @@ namespace SniperProject
 
             }
 
-            yield return waitForNextSpawn;
+            unitsSpawnedThisWave += spawnSuccess ? 1 : 0;
+
+            yield return new WaitForSeconds(GetSecsBeforeNextSpawn());
             spawnCoroutine = StartCoroutine(SpawnTargetCoroutine());
 
         }
@@ -104,8 +129,6 @@ namespace SniperProject
 
             return true;
         }
-
-
 
         private SpawnerBehaviour ChooseRandomSpawner()
         {
@@ -149,6 +172,12 @@ namespace SniperProject
             int chosenIndex = Random.Range(0, waypoints.Count);
             return waypoints[chosenIndex];
         }
+
+        private float GetSecsBeforeNextSpawn()
+        {
+            return Random.Range(currentWave.secsBetweenSpawns.x, currentWave.secsBetweenSpawns.y);
+        }
+        #endregion
     }
 }
 

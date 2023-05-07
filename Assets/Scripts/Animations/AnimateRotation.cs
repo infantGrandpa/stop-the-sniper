@@ -40,10 +40,7 @@ namespace SniperProject
             currentTween = transform.DORotate(targetRotation, secsToCompleteTween);
             currentTween.SetEase(easeType);
 
-            if (pingPongTween)
-            {
-                currentTween.OnComplete(PingPongTween);
-            }
+            base.Tween(secsToCompleteTween);
         }
 
         private Vector3 GetNewRotation()

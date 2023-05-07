@@ -48,10 +48,7 @@ namespace SniperProject
             currentTween = lineRenderer.DOColor(currentColor2, targetColor2, secsToCompleteTween);
             currentTween.SetEase(easeType);
 
-            if (pingPongTween)
-            {
-                currentTween.OnComplete(PingPongTween);
-            }
+            base.Tween(secsToCompleteTween);
         }
 
         private Color GetNewColor()

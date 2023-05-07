@@ -39,10 +39,7 @@ namespace SniperProject
             currentTween = transform.DOLocalMove(targetPosition, secsToComplete);
             currentTween.SetEase(easeType);
 
-            if (pingPongTween)
-            {
-                currentTween.OnComplete(PingPongTween);
-            }
+            base.Tween(secsToCompleteTween);
         }
 
         private Vector2 GetMovePosition()

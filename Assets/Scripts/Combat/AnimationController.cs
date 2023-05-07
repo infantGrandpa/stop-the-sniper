@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SniperProject
 {
-    public class WeaponAnimationController : MonoBehaviour
+    public class AnimationController : MonoBehaviour
     {
         [SerializeField] List<AnimationBehaviour> animations = new();
 

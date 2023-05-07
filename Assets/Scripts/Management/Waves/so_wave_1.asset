@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f72e5db35dc6f4993995ef76836138, type: 3}
   m_Name: so_wave_1
   m_EditorClassIdentifier: 
-  ascensionsToProgress: 7
-  lossesToFail: 3
-  enemyTypes: []
+  soulsToSpawn: 8
+  secsBetweenSpawns: {x: 0, y: 3.1406}
+  ascensionRatioToWin: 0.5
   soulTypes: []
+  enemyTypes: []

@@ -1,6 +1,7 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.Events;
 
 namespace SniperProject
 {
@@ -11,8 +12,11 @@ namespace SniperProject
 
         [SerializeField] TMP_Text waveText;
 
+        private bool waveReadyToUpdate = false;
 
         public Canvas MainCanvas { get;  private set; }
+
+        [SerializeField] UnityEvent onNewWaveEvent;
 
         private void Awake()
         {
@@ -39,10 +43,34 @@ namespace SniperProject
             lostText.text = WaveManager.Instance.SoulsLostCount.ToString();
         }
 
-        public void UpdateWave(int currentWave)
+        public void SetWaveWithoutAnimation(int currentWave)
         {
             waveText.text = "Wave " + currentWave;
-
         }
+
+        public void UpdateWave(int currentWave)
+        {
+            onNewWaveEvent?.Invoke();
+            waveReadyToUpdate = false;
+            //StartCoroutine(UpdateWaveCoroutine(currentWave));   
+        }
+
+        private IEnumerator UpdateWaveCoroutine(int currentWave)
+        {
+            while (!waveReadyToUpdate)
+            {
+                yield return null;
+            }
+
+            waveText.text = "Wave " + currentWave;
+            waveReadyToUpdate = false;
+        }
+
+
+        public void AllowWaveToUpdate()
+        {
+            waveReadyToUpdate = true;
+        }
+
     }
 }

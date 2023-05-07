@@ -11,6 +11,7 @@ namespace SniperProject
 
         [SerializeField] UnityEvent onDeathEvent;
 
+        public bool isInvulnerable;
 
         private void Start()
         {
@@ -19,6 +20,11 @@ namespace SniperProject
 
         public void Damage(int damageTaken)
         {
+            if (isInvulnerable)
+            {
+                return;
+            }
+
             CurrentHealth -= damageTaken;
 
             if (CurrentHealth <= 0)

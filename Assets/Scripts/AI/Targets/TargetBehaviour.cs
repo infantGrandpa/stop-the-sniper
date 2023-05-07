@@ -5,11 +5,18 @@ using UnityEngine.Events;
 
 namespace SniperProject
 {
+    [RequireComponent(typeof(HealthSystem))]
     public class TargetBehaviour : MonoBehaviour
     {
         [HideInInspector]
         public UnityEvent OnInvalid;
 
+        private HealthSystem healthSystem;
+
+        private void Awake()
+        {
+            healthSystem = GetComponent<HealthSystem>();
+        }
 
         private void OnDisable()
         {
@@ -23,6 +30,7 @@ namespace SniperProject
                 return;
             }
 
+            healthSystem.isInvulnerable = false;
             LevelManager.Instance.targets.Add(this);
         }
 
@@ -33,6 +41,7 @@ namespace SniperProject
                 return;
             }
 
+            healthSystem.isInvulnerable = true;
             OnInvalid.Invoke();
             LevelManager.Instance.targets.Remove(this);
         }

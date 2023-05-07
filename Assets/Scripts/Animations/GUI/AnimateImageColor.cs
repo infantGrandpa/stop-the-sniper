@@ -42,10 +42,7 @@ namespace SniperProject
             currentTween = image.DOColor(targetColor, secsToCompleteTween);
             currentTween.SetEase(easeType);
 
-            if (pingPongTween)
-            {
-                currentTween.OnComplete(PingPongTween);
-            }
+            base.Tween(secsToCompleteTween);
         }
 
         private Color GetNewColor()

@@ -26,10 +26,7 @@ namespace SniperProject
             currentTween = transform.DOMove(targetPosition, secsToComplete);
             currentTween.SetEase(easeType);
 
-            if (pingPongTween)
-            {
-                currentTween.OnComplete(PingPongTween);
-            }
+            base.Tween(secsToCompleteTween);
         }
 
         protected override void PingPongTween()

@@ -11,12 +11,12 @@ namespace SniperProject
         [SerializeField] Transform bulletSpawnTransform;
         [SerializeField] bool pauseFiringForDebug;
 
-        private WeaponAnimationController animationController;
+        private AnimationController animationController;
         [SerializeField] UnityEvent onFireEvent;
 
         private void Start()
         {
-            animationController = GetComponent<WeaponAnimationController>();
+            animationController = GetComponent<AnimationController>();
             StartCoroutine(FireWeaponCoroutine());
         }
 
