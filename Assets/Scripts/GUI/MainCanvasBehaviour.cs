@@ -27,10 +27,14 @@ namespace SniperProject
 
         public Vector3 ConvertWorldToCanvas(Vector3 targetPosition)
         {
-            // Convert the world position to a screen position
             Vector3 screenPosition = LevelManager.Instance.MainCamera.WorldToScreenPoint(targetPosition);
-
             return screenPosition;
+        }
+
+        public Vector3 ConvertCanvasToWorld(Vector3 targetPosition)
+        {
+            Vector3 worldPosition = LevelManager.Instance.MainCamera.ScreenToWorldPoint(targetPosition);
+            return worldPosition;
         }
 
         public void UpdateScoreCounter()

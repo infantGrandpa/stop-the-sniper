@@ -6,21 +6,30 @@ namespace SniperProject
     {
         public void EnterState()
         {
-            Debug.Log("Entering Deploy State");
+            WallDeployer.Instance.InitializeNewDeployPhase();
         }
         public void UpdateState()
         {
-            
+            GetInput();
         }
 
         public void ExitState()
         {
-            Debug.Log("Exiting Deploy State");
+            WallDeployer.Instance.ClearWallPositions();
         }
 
         public bool IsStateComplete()
         {
-            return false;
+            return WallDeployer.Instance.AllWallsDeployed();
+        }
+
+        private void GetInput()
+        {
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
+            {
+                Vector2 mousePosition = References.mainCanvasBehaviour.ConvertCanvasToWorld(Input.mousePosition);
+                WallDeployer.Instance.DeployWallAtPosition(mousePosition);
+            }
         }
 
     }

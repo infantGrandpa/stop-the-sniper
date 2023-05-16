@@ -58,13 +58,14 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8198590928089844883, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
     - {fileID: 8198590928089844884, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
+    - {fileID: 8198590928089844885, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
 --- !u!1 &3152973106714898138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8198590928089844886, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
   m_PrefabInstance: {fileID: 6487051907525304908}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &280883278585690832
+--- !u!114 &-2056671661414814548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3152973106714898138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
@@ -117,13 +118,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.05, y: 0.1, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  m_IgnoreTag: 
-  m_UseImpactDirection: 0
-  m_ScaleImpactWithMass: 0
-  m_ScaleImpactWithSpeed: 0
 --- !u!114 &6066297377682970284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +131,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  onTakeDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -2056671661414814548}
+        m_TargetAssemblyTypeName: Cinemachine.CinemachineImpulseSource, Cinemachine
+        m_MethodName: GenerateImpulse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   destroyOn0Health: 1
   onDeathEvent:
     m_PersistentCalls:

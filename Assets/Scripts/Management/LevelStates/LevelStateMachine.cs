@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SniperProject
@@ -5,10 +6,11 @@ namespace SniperProject
     public class LevelStateMachine : MonoBehaviour
     {
         private ILevelState currentState;
+        [SerializeField] float secsPerTransition;
 
         private void Start()
         {
-            currentState = new WaveState();
+            currentState = new SpawnState();
             currentState.EnterState();
         }
 
@@ -32,20 +34,51 @@ namespace SniperProject
         {
             currentState.ExitState();
 
+            ILevelState nextState;
             switch (currentState)
             {
-                case WaveState:
-                    currentState = new WaveState();
+                case SpawnState:
+                    nextState = CreateNewTransitionState<WaitState>();
+                    break;
+                case WaitState:
+                    nextState = CreateNewTransitionState<DeployState>();
                     break;
                 case DeployState:
-                    currentState = new DeployState();
+                    nextState = CreateNewTransitionState<SpawnState>();
+                    break;
+                case TransitionState:
+                    nextState = GetNextStateFromTransition();
                     break;
                 default:
-                    currentState = new PauseState();
+                    nextState = new PauseState();
                     break;
             }
 
+            currentState = nextState;
             currentState.EnterState();
+        }
+
+        private ILevelState GetNextStateFromTransition()
+        {
+            if (currentState is not TransitionState)
+            {
+                return null;
+            }
+
+            TransitionState transitionState = (TransitionState)currentState;
+            ILevelState nextState = transitionState.nextState;
+            return nextState;
+        }
+
+        private TransitionState CreateNewTransitionState<StateAfterTransition>() where StateAfterTransition : ILevelState
+        {
+            TransitionState transitionState = new();
+
+            ILevelState nextState = Activator.CreateInstance<StateAfterTransition>();
+            transitionState.nextState = nextState;
+            transitionState.secsBeforeTransitionComplete = secsPerTransition;
+
+            return transitionState;
         }
     }
 }

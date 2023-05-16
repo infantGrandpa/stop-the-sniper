@@ -6,6 +6,8 @@ namespace SniperProject
     public class HealthSystem : MonoBehaviour, IDamageable
     {
         [SerializeField] int maxHealth;
+        [SerializeField] UnityEvent onTakeDamageEvent;
+
         [SerializeField] bool destroyOn0Health = true;
         public float CurrentHealth { get; private set; }
 
@@ -26,6 +28,8 @@ namespace SniperProject
             }
 
             CurrentHealth -= damageTaken;
+
+            onTakeDamageEvent?.Invoke();
 
             if (CurrentHealth <= 0)
             {

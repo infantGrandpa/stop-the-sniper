@@ -6,6 +6,8 @@ namespace SniperProject
 {
     public class WaveManager : MonoBehaviour
     {
+        #region Properties and Variables
+
         public static WaveManager Instance
         {
             get
@@ -22,7 +24,7 @@ namespace SniperProject
         }
         private static WaveManager instance;
 
-        [SerializeField] float secsBetweenWaves;
+        public float secsBetweenWaves;
         [SerializeField] List<WaveScriptableObject> listOfWaves = new();
         public int CurrentWaveIndex { get; private set; }
         private WaveScriptableObject currentWave;
@@ -35,19 +37,25 @@ namespace SniperProject
         private int totalSoulsAscended;
         private int totalSoulsLost;
 
+        #endregion
 
-        private void Start()
+        #region Start
+
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             CurrentWaveIndex = -1;
             if (listOfWaves.Count == 0)
             {
                 Debug.LogError("ERROR WaveManager Start(): No assigned waves.");
             }
-
-            GetNextWave();
         }
 
-        private void GetNextWave()
+        public void GetNextWave()
         {
             CurrentWaveIndex++;
 
@@ -70,6 +78,10 @@ namespace SniperProject
             IsWaveComplete = false;
             SpawnController.Instance.LoadNewWave(currentWave);
         }
+
+        #endregion
+
+        #region Score Tracking
 
         public void IncreaseAscendedSouls(int increaseBy = 1)
         {
@@ -97,10 +109,29 @@ namespace SniperProject
             return soulsPerc;
         }
 
+        public void GetWinLossThisWave()
+        {
+            if (currentWave == null)
+            {
+                return;
+            }
+
+            float soulsAscendedPercentage = GetSoulsAscendedPercentage();
+
+            string successMsg = "SUCCESS: ";
+            if (soulsAscendedPercentage < currentWave.ascensionRatioToWin)
+            {
+                successMsg = "FAILED: ";
+            }
+            Debug.Log("Wave " + CurrentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
+        }
+
+        #endregion
+
         public void WaveComplete()
         {
             IsWaveComplete = true;
-            StartCoroutine(WaitForTargetsToDisappearCoroutine());
+            //StartCoroutine(WaitForTargetsToDisappearCoroutine());
         }
 
         private void Win()
@@ -122,22 +153,7 @@ namespace SniperProject
             GetNextWave();
         }
 
-        private void GetWinLossThisWave()
-        {
-            if (currentWave == null)
-            {
-                return;
-            }
 
-            float soulsAscendedPercentage = GetSoulsAscendedPercentage();
-
-            string successMsg = "SUCCESS: ";
-            if (soulsAscendedPercentage < currentWave.ascensionRatioToWin)
-            {
-                successMsg = "FAILED: ";
-            }
-            Debug.Log("Wave " + CurrentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
-        }
 
         private IEnumerator WaveBreakCoroutine()
         {

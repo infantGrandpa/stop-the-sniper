@@ -3,14 +3,13 @@ using UnityEngine;
 
 namespace SniperProject
 {
-    public class WaveState : ILevelState
+    public class SpawnState : ILevelState
     {
-        public int maxEnemies = 3;
-        private float enemiesSpawned = 0f;
 
         public void EnterState()
         {
-            enemiesSpawned = 0;
+            AstarPath.active.Scan();
+            WaveManager.Instance.GetNextWave();
             Debug.Log("Entering Wave " + WaveManager.Instance.CurrentWaveIndex);
         }
 
@@ -22,15 +21,6 @@ namespace SniperProject
         public void ExitState()
         {
             Debug.Log("Exiting Wave " + WaveManager.Instance.CurrentWaveIndex);
-        }
-
-        private void SpawnEnemy()
-        {
-            enemiesSpawned += Time.deltaTime;
-            if (enemiesSpawned >= maxEnemies)
-            {
-                ExitState();
-            }
         }
 
         public bool IsStateComplete()
