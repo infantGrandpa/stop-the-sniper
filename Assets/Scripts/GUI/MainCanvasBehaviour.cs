@@ -10,18 +10,14 @@ namespace SniperProject
         [SerializeField] TMP_Text ascendedText;
         [SerializeField] TMP_Text lostText;
 
-        [SerializeField] TMP_Text waveText;
-
-        private bool waveReadyToUpdate = false;
-
+        public WaveTextUpdater WaveUpdater { get; private set; }
         public Canvas MainCanvas { get;  private set; }
-
-        [SerializeField] UnityEvent onNewWaveEvent;
 
         private void Awake()
         {
             References.mainCanvasBehaviour = this;
             MainCanvas = GetComponent<Canvas>();
+            WaveUpdater = GetComponent<WaveTextUpdater>();
         }
 
         private void Start()
@@ -42,35 +38,5 @@ namespace SniperProject
             ascendedText.text = WaveManager.Instance.SoulsAscendedCount.ToString();
             lostText.text = WaveManager.Instance.SoulsLostCount.ToString();
         }
-
-        public void SetWaveWithoutAnimation(int currentWave)
-        {
-            waveText.text = "Wave " + currentWave;
-        }
-
-        public void UpdateWave(int currentWave)
-        {
-            onNewWaveEvent?.Invoke();
-            waveReadyToUpdate = false;
-            //StartCoroutine(UpdateWaveCoroutine(currentWave));   
-        }
-
-        private IEnumerator UpdateWaveCoroutine(int currentWave)
-        {
-            while (!waveReadyToUpdate)
-            {
-                yield return null;
-            }
-
-            waveText.text = "Wave " + currentWave;
-            waveReadyToUpdate = false;
-        }
-
-
-        public void AllowWaveToUpdate()
-        {
-            waveReadyToUpdate = true;
-        }
-
     }
 }

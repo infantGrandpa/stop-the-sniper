@@ -24,11 +24,13 @@ namespace SniperProject
 
         [SerializeField] float secsBetweenWaves;
         [SerializeField] List<WaveScriptableObject> listOfWaves = new();
-        private int currentWaveIndex = -1;
+        public int CurrentWaveIndex { get; private set; }
         private WaveScriptableObject currentWave;
 
         public int SoulsAscendedCount { get; private set; }
         public int SoulsLostCount { get; private set; }
+
+        public bool IsWaveComplete { get; private set; }
 
         private int totalSoulsAscended;
         private int totalSoulsLost;
@@ -36,6 +38,7 @@ namespace SniperProject
 
         private void Start()
         {
+            CurrentWaveIndex = -1;
             if (listOfWaves.Count == 0)
             {
                 Debug.LogError("ERROR WaveManager Start(): No assigned waves.");
@@ -46,9 +49,9 @@ namespace SniperProject
 
         private void GetNextWave()
         {
-            currentWaveIndex++;
+            CurrentWaveIndex++;
 
-            if (currentWaveIndex > listOfWaves.Count - 1)
+            if (CurrentWaveIndex > listOfWaves.Count - 1)
             {
                 Win();
                 return;
@@ -59,11 +62,12 @@ namespace SniperProject
 
         private void StartNewWave()
         {
-            currentWave = listOfWaves[currentWaveIndex];
+            currentWave = listOfWaves[CurrentWaveIndex];
 
             SoulsAscendedCount = 0;
             SoulsLostCount = 0;
 
+            IsWaveComplete = false;
             SpawnController.Instance.LoadNewWave(currentWave);
         }
 
@@ -83,21 +87,26 @@ namespace SniperProject
 
         private float GetSoulsAscendedPercentage()
         {
+            if (currentWave == null)
+            {
+                return 1;
+            }
+
             int soulsNotLost = currentWave.soulsToSpawn - SoulsLostCount;
             float soulsPerc = (float)soulsNotLost / (float)currentWave.soulsToSpawn;
-            Debug.Log("SAC (" + soulsNotLost.ToString() + ") / STS (" + currentWave.soulsToSpawn.ToString() + ") = Perc (" + soulsPerc.ToString() + ")");
             return soulsPerc;
         }
 
         public void WaveComplete()
         {
+            IsWaveComplete = true;
             StartCoroutine(WaitForTargetsToDisappearCoroutine());
         }
 
         private void Win()
         {
             Debug.Log("Won! Resetting...");
-            currentWaveIndex = -1;
+            CurrentWaveIndex = -1;
             GetNextWave();
         }
 
@@ -109,6 +118,16 @@ namespace SniperProject
                 targetsOnField = LevelManager.Instance.targets.Count > 0;
                 yield return null;
             }
+            GetWinLossThisWave();
+            GetNextWave();
+        }
+
+        private void GetWinLossThisWave()
+        {
+            if (currentWave == null)
+            {
+                return;
+            }
 
             float soulsAscendedPercentage = GetSoulsAscendedPercentage();
 
@@ -117,17 +136,23 @@ namespace SniperProject
             {
                 successMsg = "FAILED: ";
             }
-            Debug.Log("Wave " + currentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
-            GetNextWave();
+            Debug.Log("Wave " + CurrentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
         }
 
         private IEnumerator WaveBreakCoroutine()
         {
             References.mainCanvasBehaviour.UpdateScoreCounter();
-            References.mainCanvasBehaviour.UpdateWave(currentWaveIndex);
+            References.mainCanvasBehaviour.WaveUpdater.StartNewWaveAnimation(CurrentWaveIndex);
 
             yield return new WaitForSeconds(secsBetweenWaves);
             StartNewWave();
+        }
+
+        [ContextMenu("Complete This Wave")]
+        public void ForceWaveComplete()
+        {
+            currentWave = listOfWaves[CurrentWaveIndex];
+            SpawnController.Instance.WaveComplete();
         }
 
 

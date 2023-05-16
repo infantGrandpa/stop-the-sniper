@@ -53,9 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198590928089844886, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
       propertyPath: m_Name
-      value: pre_wrld_wall_shake
+      value: pre_wrld_wall_straight
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8198590928089844883, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
+    - {fileID: 8198590928089844884, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
 --- !u!1 &3152973106714898138 stripped
 GameObject:
@@ -139,3 +141,4 @@ MonoBehaviour:
   onDeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  isInvulnerable: 0

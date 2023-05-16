@@ -41,7 +41,7 @@ namespace SniperProject
             ResumeSpawners();
         }
 
-        private void WaveComplete()
+        public void WaveComplete()
         {
             WaveManager.Instance.WaveComplete();
             PauseSpawners();
