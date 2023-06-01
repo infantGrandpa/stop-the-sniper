@@ -71,12 +71,14 @@ namespace SniperProject
         public void StopFiring()
         {
             StopCoroutine(fireCoroutine);
+            fireCoroutine = null;
         }
 
         public void StartFiring()
         {
             if (fireCoroutine != null)
             {
+                DebugHelper.Log("Cancelling start firing");
                 return;
             }
 
