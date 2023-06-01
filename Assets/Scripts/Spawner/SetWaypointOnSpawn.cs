@@ -12,7 +12,7 @@ namespace SniperProject
         {
             if (waypoint == null)
             {
-                Debug.LogError("ERROR SetWaypointOnSpawn: Waypoint on " + gameObject.name + " not set.", this);
+                DebugHelper.LogError("Waypoint on " + gameObject.name + " not set.");
                 return;
             }
             

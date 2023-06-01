@@ -15,7 +15,7 @@ namespace SniperProject
 
         public void ExitState()
         {
-            WallDeployer.Instance.ClearWallPositions();
+            WallDeployer.Instance.EndDeployPhase();
         }
 
         public bool IsStateComplete()
@@ -25,9 +25,11 @@ namespace SniperProject
 
         private void GetInput()
         {
+            Vector2 mousePosition = MainCanvasBehaviour.Instance.ConvertCanvasToWorld(Input.mousePosition);
+            WallDeployer.Instance.UpdateGhostPosition(mousePosition);
+
             if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
             {
-                Vector2 mousePosition = References.mainCanvasBehaviour.ConvertCanvasToWorld(Input.mousePosition);
                 WallDeployer.Instance.DeployWallAtPosition(mousePosition);
             }
         }

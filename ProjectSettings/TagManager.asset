@@ -15,7 +15,7 @@ TagManager:
   - Targets
   - Obstacles
   - Projectiles
-  - 
+  - NonCollidingObjects
   - 
   - 
   - 

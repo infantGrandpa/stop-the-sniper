@@ -23,8 +23,7 @@ namespace SniperProject
             {
                 return;
             }
-
-            Debug.LogWarning("Target waypoint not set for " + gameObject.name + ". Choosing random waypoint...", this);
+            DebugHelper.LogWarning("Target waypoint not set for " + gameObject.name + ". Choosing random waypoint...");
             SetTargetWaypoint(SpawnController.Instance.GetRandomWaypoint());
         }
 

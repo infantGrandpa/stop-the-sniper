@@ -5,12 +5,11 @@ namespace SniperProject
 {
     public class SpawnState : ILevelState
     {
-
         public void EnterState()
         {
             AstarPath.active.Scan();
             WaveManager.Instance.GetNextWave();
-            Debug.Log("Entering Wave " + WaveManager.Instance.CurrentWaveIndex);
+            PlayerBehaviour.Instance.StartFiring();
         }
 
         public void UpdateState()
@@ -20,7 +19,7 @@ namespace SniperProject
 
         public void ExitState()
         {
-            Debug.Log("Exiting Wave " + WaveManager.Instance.CurrentWaveIndex);
+            
         }
 
         public bool IsStateComplete()

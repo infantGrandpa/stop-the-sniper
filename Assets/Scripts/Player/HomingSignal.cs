@@ -47,7 +47,7 @@ namespace SniperProject
 
             if (!hit.transform.TryGetComponent(out TargetBehaviour hitTarget))
             {
-                Debug.LogError("ERROR HomingSignal FindTargetCircleCast: Target (" + hit.transform.name + ") does not have a CharacterBehaviour Component but is on the Target Layer.");
+                DebugHelper.LogError("Target (" + hit.transform.name + ") does not have a CharacterBehaviour Component but is on the Target Layer.");
                 return false;
             }
 

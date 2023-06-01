@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,7 +40,7 @@ namespace SniperProject
             }
 
             healthSystem.isInvulnerable = true;
-            OnInvalid.Invoke();
+            OnInvalid?.Invoke();
             LevelManager.Instance.targets.Remove(this);
         }
 

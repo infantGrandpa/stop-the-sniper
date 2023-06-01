@@ -13,9 +13,25 @@ namespace SniperProject
         public WaveTextUpdater WaveUpdater { get; private set; }
         public Canvas MainCanvas { get;  private set; }
 
+        public static MainCanvasBehaviour Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = FindObjectOfType(typeof(MainCanvasBehaviour)) as MainCanvasBehaviour;
+
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+            }
+        }
+        private static MainCanvasBehaviour _instance;
+
+
         private void Awake()
         {
-            References.mainCanvasBehaviour = this;
             MainCanvas = GetComponent<Canvas>();
             WaveUpdater = GetComponent<WaveTextUpdater>();
         }

@@ -15,5 +15,6 @@ MonoBehaviour:
   soulsToSpawn: 4
   secsBetweenSpawns: {x: 0, y: 4.6848626}
   ascensionRatioToWin: 0.5
-  soulTypes: []
+  soulTypes:
+  - {fileID: 4215140654377464896, guid: 25ed33c5ee0709c4eb73dde140d4d127, type: 3}
   enemyTypes: []

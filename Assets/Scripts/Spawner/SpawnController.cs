@@ -110,7 +110,9 @@ namespace SniperProject
         private bool SpawnAtRandomSpawner()
         {
             SpawnerBehaviour chosenSpawner = ChooseRandomSpawner();
-            bool success = chosenSpawner.AttemptSpawnObject();
+
+            GameObject objectToSpawn = ChooseRandomSpawnObject();
+            bool success = chosenSpawner.AttemptSpawnObject(objectToSpawn);
             return success;
         }
 
@@ -122,7 +124,8 @@ namespace SniperProject
                 return false;
             }
 
-            if (!chosenSpawner.AttemptSpawnObject())
+            GameObject objectToSpawn = ChooseRandomSpawnObject();
+            if (!chosenSpawner.AttemptSpawnObject(objectToSpawn))
             {
                 return false;
             }
@@ -176,6 +179,13 @@ namespace SniperProject
         private float GetSecsBeforeNextSpawn()
         {
             return Random.Range(currentWave.secsBetweenSpawns.x, currentWave.secsBetweenSpawns.y);
+        }
+
+        private GameObject ChooseRandomSpawnObject()
+        {
+            int randomIndex = Random.Range(0, currentWave.soulTypes.Count - 1);
+
+            return currentWave.soulTypes[randomIndex];
         }
         #endregion
     }

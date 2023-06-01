@@ -41,6 +41,14 @@ namespace SniperProject
             private set { _weaponBehaviour = value; }
         }
 
+        public void StopFiring()
+        {
+            _weaponBehaviour.StopFiring();
+        }
 
+        public void StartFiring()
+        {
+            _weaponBehaviour.StartFiring();
+        }
     }
 }

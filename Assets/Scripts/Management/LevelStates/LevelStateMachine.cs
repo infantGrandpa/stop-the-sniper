@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace SniperProject
 {
@@ -8,10 +9,13 @@ namespace SniperProject
         private ILevelState currentState;
         [SerializeField] float secsPerTransition;
 
+        [Header("For Debugging")]
+        [SerializeField, ReadOnly] string currentStateName = "None";
+        [SerializeField, ReadOnly] string nextState = "N/A";
+
         private void Start()
         {
-            currentState = new SpawnState();
-            currentState.EnterState();
+            ChangeState(new SpawnState());
         }
 
         private void Update()
@@ -32,8 +36,6 @@ namespace SniperProject
 
         private void TransitionToNextState()
         {
-            currentState.ExitState();
-
             ILevelState nextState;
             switch (currentState)
             {
@@ -48,20 +50,31 @@ namespace SniperProject
                     break;
                 case TransitionState:
                     nextState = GetNextStateFromTransition();
+                    DebugHelper.Log("Current State: " +  currentStateName + "  Next state: " + nextState.GetType().Name);
                     break;
                 default:
                     nextState = new PauseState();
                     break;
             }
 
-            currentState = nextState;
-            currentState.EnterState();
+            ChangeState(nextState);
+        }
+
+        private void ChangeState(ILevelState newState)
+        {
+            currentState?.ExitState();
+            currentState = newState;
+            currentState?.EnterState();
+
+            currentStateName = currentState != null ? currentState.GetType().Name : "None";
+            nextState = currentState is TransitionState ? ((TransitionState)currentState).nextState.GetType().Name : "N/A";
         }
 
         private ILevelState GetNextStateFromTransition()
         {
             if (currentState is not TransitionState)
             {
+                DebugHelper.LogError("Current State (" + currentStateName + ") is not TransitionState");
                 return null;
             }
 

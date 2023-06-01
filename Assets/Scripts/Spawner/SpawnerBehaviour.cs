@@ -6,7 +6,6 @@ namespace SniperProject
 {
     public class SpawnerBehaviour : MonoBehaviour
     {
-        [SerializeField] GameObject objectToSpawn;
         private IOnSpawn onSpawnBehaviour;
 
         public bool IsOccupied { get; private set; }
@@ -40,18 +39,18 @@ namespace SniperProject
             IsOccupied = false;
         }
 
-        public bool AttemptSpawnObject()
+        public bool AttemptSpawnObject(GameObject objectToSpawn)
         {
             if (IsOccupied)
             {
                 return false;
             }
 
-            SpawnObject();
+            SpawnObject(objectToSpawn);
             return true;
         }
 
-        private GameObject SpawnObject()
+        private GameObject SpawnObject(GameObject objectToSpawn)
         {
             GameObject instance = LevelManager.Instance.InstantiateObjectOnDyanmicTransform(objectToSpawn);
             instance.transform.position = transform.position;

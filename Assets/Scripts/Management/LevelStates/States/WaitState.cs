@@ -24,6 +24,7 @@ namespace SniperProject
 
         public void ExitState()
         {
+            PlayerBehaviour.Instance.StopFiring();
             WaveManager.Instance.GetWinLossThisWave();
         }
 

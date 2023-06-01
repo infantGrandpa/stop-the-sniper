@@ -50,7 +50,7 @@ namespace SniperProject
 
         public void SetReticlePosition(Vector3 newPosition)
         {
-            Vector3 screenPosition = References.mainCanvasBehaviour.ConvertWorldToCanvas(newPosition);
+            Vector3 screenPosition = MainCanvasBehaviour.Instance.ConvertWorldToCanvas(newPosition);
             if (animateMove == null)
             {
                 transform.position = screenPosition;

@@ -51,7 +51,7 @@ namespace SniperProject
             CurrentWaveIndex = -1;
             if (listOfWaves.Count == 0)
             {
-                Debug.LogError("ERROR WaveManager Start(): No assigned waves.");
+                DebugHelper.LogError("No assigned waves.");
             }
         }
 
@@ -87,14 +87,14 @@ namespace SniperProject
         {
             SoulsAscendedCount += increaseBy;
             totalSoulsAscended += increaseBy;
-            References.mainCanvasBehaviour.UpdateScoreCounter();
+            MainCanvasBehaviour.Instance.UpdateScoreCounter();
         }
 
         public void IncreaseLostSouls(int increaseBy = 1)
         {
             SoulsLostCount += increaseBy;
             totalSoulsLost += increaseBy;
-            References.mainCanvasBehaviour.UpdateScoreCounter();
+            MainCanvasBehaviour.Instance.UpdateScoreCounter();
         }
 
         private float GetSoulsAscendedPercentage()
@@ -157,8 +157,8 @@ namespace SniperProject
 
         private IEnumerator WaveBreakCoroutine()
         {
-            References.mainCanvasBehaviour.UpdateScoreCounter();
-            References.mainCanvasBehaviour.WaveUpdater.StartNewWaveAnimation(CurrentWaveIndex);
+            MainCanvasBehaviour.Instance.UpdateScoreCounter();
+            MainCanvasBehaviour.Instance.WaveUpdater.StartNewWaveAnimation(CurrentWaveIndex);
 
             yield return new WaitForSeconds(secsBetweenWaves);
             StartNewWave();

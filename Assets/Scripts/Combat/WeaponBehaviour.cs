@@ -14,10 +14,12 @@ namespace SniperProject
         private AnimationController animationController;
         [SerializeField] UnityEvent onFireEvent;
 
+        private Coroutine fireCoroutine;
+
         private void Start()
         {
             animationController = GetComponent<AnimationController>();
-            StartCoroutine(FireWeaponCoroutine());
+            StartFiring();
         }
 
         private void FireBullet()
@@ -35,7 +37,7 @@ namespace SniperProject
             GameObject newBullet = LevelManager.Instance.InstantiateObjectOnDyanmicTransform(bulletPrefab);
             if (!newBullet.TryGetComponent(out BulletBehaviour bulletBehaviour))
             {
-                Debug.LogError("ERROR WeaponBehaviour FireBullet(): Bullet Prefab (" + bulletPrefab.name + " does not have an attached BulletBehaviour component.", this);
+                DebugHelper.LogError("Bullet Prefab (" + bulletPrefab.name + " does not have an attached BulletBehaviour component.");
                 return;
             }
 
@@ -63,9 +65,23 @@ namespace SniperProject
             yield return new WaitForSeconds(secsBetweenShots); ;
             FireBullet();
 
-            StartCoroutine(FireWeaponCoroutine());
+            fireCoroutine = StartCoroutine(FireWeaponCoroutine());
         }
 
+        public void StopFiring()
+        {
+            StopCoroutine(fireCoroutine);
+        }
+
+        public void StartFiring()
+        {
+            if (fireCoroutine != null)
+            {
+                return;
+            }
+
+            fireCoroutine = StartCoroutine(FireWeaponCoroutine());
+        }
 
     }
 

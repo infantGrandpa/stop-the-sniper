@@ -16,5 +16,5 @@ MonoBehaviour:
   secsBetweenSpawns: {x: 0, y: 0}
   ascensionRatioToWin: 0
   soulTypes:
-  - {fileID: 4215140654377464896, guid: 25ed33c5ee0709c4eb73dde140d4d127, type: 3}
+  - {fileID: 445871760712277147, guid: ee455247660921c458126cf5c439298b, type: 3}
   enemyTypes: []

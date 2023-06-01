@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Pathfinding;
 
 namespace SniperProject
 {
@@ -25,22 +26,29 @@ namespace SniperProject
         public int wallsToDeploy = 3;
         private int wallsDeployed;
 
-        private List<Vector2> wallPositions = new();
+        [SerializeField] Transform point1Transform;
+        [SerializeField] Transform point2Transform;
+
+        private bool showGhostWall;
+        private WallBehaviour currentWallBehaviour;
+        private Vector2 currentGhostPosition;
 
         public void DeployWallAtPosition(Vector2 positionToDeploy)
         {
-            if (wallsDeployed >= wallsToDeploy)
+            if (AllWallsDeployed() || currentWallBehaviour == null)
             {
                 return;
             }
 
-            Debug.Log("Deploying wall at " + positionToDeploy.ToString());
+            UpdateGhostPosition(positionToDeploy);
 
-            GameObject wallInstance = LevelManager.Instance.InstantiateObjectOnDyanmicTransform(wallPrefab);
-            wallInstance.transform.position = positionToDeploy;
+            if (!IsWallPositionValid())
+            {
+                return;
+            }
 
-            wallPositions.Add(positionToDeploy);
-            wallsDeployed++;
+            ConvertGhostToWall();
+            GetNextWall();
         }
 
         public bool AllWallsDeployed()
@@ -49,25 +57,102 @@ namespace SniperProject
             return  allWallsDeployed;
         }
 
-        private void OnDrawGizmos()
+        private bool IsWallPositionValid()
         {
-            Gizmos.color = Color.blue;
-            foreach(Vector2 thisPosition in wallPositions)
-            {
-                Gizmos.DrawWireSphere(thisPosition, 0.5f);
-            }
+            return currentWallBehaviour.IsCurrentPositionValid();
         }
 
-        public void ClearWallPositions()
+        //May not need this anymore, but will keep around for the time being
+        private bool IsPathThroughWallsPossible(Vector2 positionToTest)
         {
-            wallPositions.Clear();
-            wallsDeployed = 0;
+            if (AstarPath.active == null)
+            {
+                return false;
+            }
+
+            Vector3 point1 = point1Transform.position;
+            Vector3 point2 = point2Transform.position;
+
+            GraphNode node1 = AstarPath.active.GetNearest(point1, NNConstraint.Default).node;
+            GraphNode node2 = AstarPath.active.GetNearest(point2, NNConstraint.Default).node;
+
+            if (PathUtilities.IsPathPossible(node1, node2))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!showGhostWall)
+            {
+                return;
+            }
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(currentGhostPosition, 0.5f);
+            
+        }
+
+        public void EndDeployPhase()
+        {
+            HideGhost();
         }
 
         public void InitializeNewDeployPhase()
         {
             wallsDeployed = 0;
+            GetNextWall();
+            ShowGhost();
         }
+
+        private void ShowGhost()
+        {
+            showGhostWall = true;
+        }
+
+        public void UpdateGhostPosition(Vector2 newPosition)
+        {
+            if (currentWallBehaviour == null)
+            {
+                return;
+            }
+
+            currentWallBehaviour.UpdateGhostPosition(newPosition);
+            currentGhostPosition = newPosition;
+        }
+
+        private void HideGhost()
+        {
+            showGhostWall = false;
+        }
+
+        private void GetNextWall()
+        {
+            if (AllWallsDeployed())
+            {
+                currentWallBehaviour = null;
+                return;
+            }
+
+            GameObject wallInstance = LevelManager.Instance.InstantiateObjectOnDyanmicTransform(wallPrefab);
+            if (!wallInstance.TryGetComponent(out currentWallBehaviour))
+            {
+                DebugHelper.LogError("Wall Prefab(" + wallPrefab.name + ") is missing a WallBehaviour component.");
+                return;
+            }
+
+            currentWallBehaviour.InitializeAsGhost();
+        }
+
+        private void ConvertGhostToWall()
+        {
+            currentWallBehaviour.InitializeAsWall();
+            wallsDeployed++;
+        }
+
 
     }
 }

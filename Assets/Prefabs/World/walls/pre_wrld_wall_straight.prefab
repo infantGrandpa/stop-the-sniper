@@ -60,6 +60,11 @@ PrefabInstance:
     - {fileID: 8198590928089844884, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
     - {fileID: 8198590928089844885, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
+--- !u!212 &113264933641756803 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6599117660425372367, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
+  m_PrefabInstance: {fileID: 6487051907525304908}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3152973106714898138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8198590928089844886, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
@@ -118,6 +123,24 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.05, y: 0.1, z: 0}
+--- !u!114 &3835251378646938251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152973106714898138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7deb6435fb0044ca602555c1250309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 113264933641756803}
+  colliders:
+  - {fileID: 7058425339283365020}
+  minMaxRotation: {x: -45, y: 45}
+  validPositionColor: {r: 0, g: 1, b: 0.043819427, a: 0.5019608}
+  invalidPositionColor: {r: 1, g: 0, b: 0, a: 0.5019608}
 --- !u!114 &6066297377682970284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,3 +174,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isInvulnerable: 0
+--- !u!61 &7058425339283365020 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4319571230467899088, guid: 98d2e7f45231db54191b2ce53e7c9897, type: 3}
+  m_PrefabInstance: {fileID: 6487051907525304908}
+  m_PrefabAsset: {fileID: 0}
