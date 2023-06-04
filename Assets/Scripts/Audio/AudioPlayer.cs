@@ -43,27 +43,13 @@ namespace AudioManager
             }
         }
 
-        /// <summary>
-        /// Set the audio source's intial values based on the provided scriptable object.
-        /// </summary>
-        /// <param name="soundToMatch">The Sound scriptable object that we will match this source to.</param>
-        public void InitSound(SoundScriptableObject soundToMatch)
+        public AudioSource InitializeAudioSource(SoundType newSoundType)
         {
             GetAllComponents();
-
-            originalSound = soundToMatch;
-
-            soundType = originalSound.soundType;
+            soundType = newSoundType;
             AddToAudioPlayerList();
 
-            audioSource.clip = originalSound.clip;
-            audioSource.volume = originalSound.volume;
-            audioSource.pitch = originalSound.pitch;
-            audioSource.loop = originalSound.loop;
-            audioSource.mute = originalSound.mute;
-
-            audioSource.Play();
-
+            return audioSource;
         }
 
 

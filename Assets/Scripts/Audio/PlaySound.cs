@@ -24,7 +24,9 @@ namespace AudioManager
             AudioPlayer audioPlayer = AudioManager.Instance.CreateNewAudioPlayer(useDefaultParent);
             AudioManager.Instance.RenameGameObjectFromSound(audioPlayer.gameObject, soundToPlay);
             audioPlayer.transform.position = position;
-            audioPlayer.InitSound(soundToPlay);
+            
+            AudioSource audioSource = audioPlayer.InitializeAudioSource(soundToPlay.soundType);
+            ConvertSoundToAudioClip(audioSource);
         }
 
         public virtual void PlaySoundAtTransform(Transform transformParent)
@@ -38,9 +40,22 @@ namespace AudioManager
             AudioPlayer audioPlayer = AudioManager.Instance.CreateNewAudioPlayer(false);
             AudioManager.Instance.RenameGameObjectFromSound(audioPlayer.gameObject, soundToPlay);
             audioPlayer.transform.SetParent(transformParent);
-            audioPlayer.InitSound(soundToPlay);
+
+            AudioSource audioSource = audioPlayer.InitializeAudioSource(soundToPlay.soundType);
+            ConvertSoundToAudioClip(audioSource);
         }
 
+
+        protected virtual void ConvertSoundToAudioClip(AudioSource audioSource)
+        {
+            audioSource.clip = soundToPlay.clip;
+            audioSource.volume = soundToPlay.volume;
+            audioSource.pitch = soundToPlay.pitch;
+            audioSource.loop = soundToPlay.loop;
+            audioSource.mute = soundToPlay.mute;
+
+            audioSource.Play();
+        }
         #endregion
     }
 }

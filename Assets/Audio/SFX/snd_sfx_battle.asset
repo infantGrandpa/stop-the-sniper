@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 220ed109322494a4d840ad56dac4cd84, type: 3}
-  m_Name: snd_music_mainTheme
+  m_Name: snd_sfx_battle
   m_EditorClassIdentifier: 
-  soundName: 
-  clip: {fileID: 0}
+  soundName: Background Ambience
+  clip: {fileID: 8300000, guid: e8edad60b77de434b9fbc95f3d1db6be, type: 3}
   soundType: 0
-  volume: 1
+  volume: 0.164
   pitch: 1
-  loop: 0
+  loop: 1
   mute: 0
