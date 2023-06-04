@@ -51,7 +51,7 @@ namespace SniperProject
                 return false;
             }
 
-            if (!hitTarget.IsTargetValid())
+            if (!hitTarget.IsValidTarget)
             {
                 return false;
             }
@@ -66,6 +66,11 @@ namespace SniperProject
             TargetBehaviour closestTarget = null;
             foreach (TargetBehaviour thisTarget in LevelManager.Instance.targets)
             {
+                if (!thisTarget.IsValidTarget)
+                {
+                    continue;
+                }
+
                 float distanceToThisTarget = CalculateDistanceFromTransformToLine(thisTarget.transform);
                 if (distanceToThisTarget > closestDistanceToTarget)
                 {

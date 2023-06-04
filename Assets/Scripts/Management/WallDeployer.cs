@@ -23,15 +23,12 @@ namespace SniperProject
         private static WallDeployer instance;
 
         [SerializeField] GameObject wallPrefab;
-        public int wallsToDeploy = 3;
-        private int wallsDeployed;
+        public int wallsToDeploy;
 
         [SerializeField] Transform point1Transform;
         [SerializeField] Transform point2Transform;
 
-        private bool showGhostWall;
         private WallBehaviour currentWallBehaviour;
-        private Vector2 currentGhostPosition;
 
         public void DeployWallAtPosition(Vector2 positionToDeploy)
         {
@@ -53,7 +50,7 @@ namespace SniperProject
 
         public bool AllWallsDeployed()
         {
-            bool allWallsDeployed = wallsDeployed >= wallsToDeploy;
+            bool allWallsDeployed = wallsToDeploy <= 0; 
             return  allWallsDeployed;
         }
 
@@ -84,33 +81,9 @@ namespace SniperProject
             return false;
         }
 
-        private void OnDrawGizmos()
-        {
-            if (!showGhostWall)
-            {
-                return;
-            }
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(currentGhostPosition, 0.5f);
-            
-        }
-
-        public void EndDeployPhase()
-        {
-            HideGhost();
-        }
-
         public void InitializeNewDeployPhase()
         {
-            wallsDeployed = 0;
             GetNextWall();
-            ShowGhost();
-        }
-
-        private void ShowGhost()
-        {
-            showGhostWall = true;
         }
 
         public void UpdateGhostPosition(Vector2 newPosition)
@@ -121,13 +94,8 @@ namespace SniperProject
             }
 
             currentWallBehaviour.UpdateGhostPosition(newPosition);
-            currentGhostPosition = newPosition;
         }
 
-        private void HideGhost()
-        {
-            showGhostWall = false;
-        }
 
         private void GetNextWall()
         {
@@ -150,9 +118,14 @@ namespace SniperProject
         private void ConvertGhostToWall()
         {
             currentWallBehaviour.InitializeAsWall();
-            wallsDeployed++;
+            AdjustWallsToDeploy(-1);
         }
 
+        public void AdjustWallsToDeploy(int adjustBy = 1)
+        {
+            wallsToDeploy += adjustBy;
+            MainCanvasBehaviour.Instance.UpdateWalls();
+        }
 
     }
 }

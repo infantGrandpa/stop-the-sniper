@@ -25,14 +25,7 @@ namespace SniperProject
 
         public void ChangeWaveTextString()
         {
-            string newWaveString = GetWaveString(nextWaveIndex);
-
-            //Debug.Log("Changing wave...");
-            //if (waveText.text == newWaveString)
-            //{
-            //    Debug.Log("Cancelling wave change...");
-            //    return;
-            //}
+            string newWaveString = GetWaveString(nextWaveIndex + 1);
 
             waveText.text = newWaveString;
             StartCoroutine(OnWaveChangedEventCoroutine());

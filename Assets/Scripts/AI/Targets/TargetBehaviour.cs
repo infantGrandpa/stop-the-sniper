@@ -10,53 +10,40 @@ namespace SniperProject
         public UnityEvent OnInvalid;
 
         private HealthSystem healthSystem;
+        
+        public bool IsValidTarget { get; private set; }
 
         private void Awake()
         {
             healthSystem = GetComponent<HealthSystem>();
         }
 
+        private void OnEnable()
+        {
+            LevelManager.Instance.targets.Add(this);
+        }
+
         private void OnDisable()
         {
-            MarkTargetInvalid();
+            if (LevelManager.Instance == null)
+            {
+                return;
+            }
+
+            LevelManager.Instance.targets.Remove(this);
         }
 
         public void MarkTargetValid()
         {
-            if (IsTargetValid())        //Return if already validated
-            {
-                return;
-            }
-
-            healthSystem.isInvulnerable = false;
-            LevelManager.Instance.targets.Add(this);
+            IsValidTarget = true;
+            healthSystem.isInvulnerable = false;   
         }
 
         public void MarkTargetInvalid()
         {
-            if (!IsTargetValid())        //Return if already invalidated
-            {
-                return;
-            }
-
+            IsValidTarget = false;
             healthSystem.isInvulnerable = true;
             OnInvalid?.Invoke();
-            LevelManager.Instance.targets.Remove(this);
-        }
-
-        public bool IsTargetValid()
-        {
-            if (LevelManager.Instance == null)
-            {
-                return false;
-            }
-
-            if (LevelManager.Instance.targets.Contains(this))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public void IncreaseLostSoulCountOnDeath()

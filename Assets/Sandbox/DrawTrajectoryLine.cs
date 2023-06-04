@@ -10,7 +10,7 @@ namespace SniperProject
     {
         private HomingSignal homingSignal;
         private WeaponBehaviour weapon;
-        private BulletBehaviour bulletBehaviour;
+        private RotatingBulletBehaviour bulletBehaviour;
         [SerializeField] GameObject trajectoryPoints;
 
 
@@ -18,7 +18,7 @@ namespace SniperProject
         {
             homingSignal = GetComponent<HomingSignal>();
             weapon = GetComponent<WeaponBehaviour>();
-            bulletBehaviour = weapon.bulletPrefab.GetComponent<BulletBehaviour>();
+            bulletBehaviour = weapon.bulletPrefab.GetComponent<RotatingBulletBehaviour>();
         }
 
         private void Update()

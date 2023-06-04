@@ -1,6 +1,3 @@
-using System.Collections;
-using UnityEngine;
-
 namespace SniperProject
 {
     public class SpawnState : ILevelState

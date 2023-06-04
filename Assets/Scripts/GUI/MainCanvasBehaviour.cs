@@ -9,6 +9,8 @@ namespace SniperProject
     {
         [SerializeField] TMP_Text ascendedText;
         [SerializeField] TMP_Text lostText;
+        [SerializeField] TMP_Text totalSoulsText;
+        [SerializeField] TMP_Text wallsText;
 
         public WaveTextUpdater WaveUpdater { get; private set; }
         public Canvas MainCanvas { get;  private set; }
@@ -38,7 +40,7 @@ namespace SniperProject
 
         private void Start()
         {
-            UpdateScoreCounter();
+            UpdateAllCounters();
         }
 
         public Vector3 ConvertWorldToCanvas(Vector3 targetPosition)
@@ -53,10 +55,32 @@ namespace SniperProject
             return worldPosition;
         }
 
-        public void UpdateScoreCounter()
+        public void UpdateAscendedSouls()
         {
             ascendedText.text = WaveManager.Instance.SoulsAscendedCount.ToString();
+        }
+
+        public void UpdateLostSouls()
+        {
             lostText.text = WaveManager.Instance.SoulsLostCount.ToString();
+        }
+
+        public void UpdateTotalSouls()
+        {
+            totalSoulsText.text = WaveManager.Instance.SoulsThisWave.ToString();
+        }
+
+        public void UpdateWalls()
+        {
+            wallsText.text = WallDeployer.Instance.wallsToDeploy.ToString();
+        }
+
+        public void UpdateAllCounters()
+        {
+            UpdateAscendedSouls();
+            UpdateLostSouls();
+            UpdateTotalSouls();
+            UpdateWalls();
         }
     }
 }

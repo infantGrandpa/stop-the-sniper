@@ -7,7 +7,7 @@ namespace SniperProject
 
         public void DisableThisBullet()
         {
-            if (TryGetComponent(out BulletBehaviour myBulletBehaviour)) {
+            if (TryGetComponent(out RotatingBulletBehaviour myBulletBehaviour)) {
                 Destroy(myBulletBehaviour);
             }
 

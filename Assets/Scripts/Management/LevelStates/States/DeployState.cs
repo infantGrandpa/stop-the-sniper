@@ -15,7 +15,7 @@ namespace SniperProject
 
         public void ExitState()
         {
-            WallDeployer.Instance.EndDeployPhase();
+
         }
 
         public bool IsStateComplete()

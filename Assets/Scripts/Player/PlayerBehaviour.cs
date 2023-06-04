@@ -43,13 +43,11 @@ namespace SniperProject
 
         public void StopFiring()
         {
-            DebugHelper.Log("Halting fire.");
             _weaponBehaviour.StopFiring();
         }
 
         public void StartFiring()
         {
-            DebugHelper.Log("Starting to fire.");
             _weaponBehaviour.StartFiring();
         }
     }

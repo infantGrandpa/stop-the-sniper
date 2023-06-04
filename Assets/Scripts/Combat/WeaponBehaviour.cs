@@ -16,6 +16,8 @@ namespace SniperProject
 
         private Coroutine fireCoroutine;
 
+        [SerializeField] HomingSignal homingSignal;
+
         private void Start()
         {
             animationController = GetComponent<AnimationController>();
@@ -25,11 +27,6 @@ namespace SniperProject
         private void FireBullet()
         {
             if (pauseFiringForDebug)
-            {
-                return;
-            }
-
-            if (PlayerBehaviour.Instance.PlayerHomingSignal == null)
             {
                 return;
             }
@@ -45,8 +42,15 @@ namespace SniperProject
             bulletTransform.position = bulletSpawnTransform.position;
 
             bulletTransform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
-            bulletBehaviour.InitBullet(PlayerBehaviour.Instance.PlayerHomingSignal.CurrentTarget);
 
+            TargetBehaviour target = null;
+            if (homingSignal != null)
+            {
+                target = homingSignal.CurrentTarget;
+            }
+
+            bulletBehaviour.InitBullet(target);
+            
             onFireEvent?.Invoke();
 
             if (animationController != null)
@@ -78,7 +82,6 @@ namespace SniperProject
         {
             if (fireCoroutine != null)
             {
-                DebugHelper.Log("Cancelling start firing");
                 return;
             }
 

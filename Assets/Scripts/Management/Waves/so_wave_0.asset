@@ -17,4 +17,5 @@ MonoBehaviour:
   ascensionRatioToWin: 0.5
   soulTypes:
   - {fileID: 4215140654377464896, guid: 25ed33c5ee0709c4eb73dde140d4d127, type: 3}
-  enemyTypes: []
+  enemyTypes:
+  - {fileID: 4215140654377464896, guid: 766c6d91fdc35ef499f7601b1234b60b, type: 3}

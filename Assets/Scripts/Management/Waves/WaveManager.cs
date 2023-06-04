@@ -31,6 +31,7 @@ namespace SniperProject
 
         public int SoulsAscendedCount { get; private set; }
         public int SoulsLostCount { get; private set; }
+        public int SoulsThisWave { get; private set; }
 
         public bool IsWaveComplete { get; private set; }
 
@@ -74,6 +75,7 @@ namespace SniperProject
 
             SoulsAscendedCount = 0;
             SoulsLostCount = 0;
+            SoulsThisWave = currentWave.soulsToSpawn;
 
             IsWaveComplete = false;
             SpawnController.Instance.LoadNewWave(currentWave);
@@ -87,14 +89,14 @@ namespace SniperProject
         {
             SoulsAscendedCount += increaseBy;
             totalSoulsAscended += increaseBy;
-            MainCanvasBehaviour.Instance.UpdateScoreCounter();
+            MainCanvasBehaviour.Instance.UpdateAscendedSouls();
         }
 
         public void IncreaseLostSouls(int increaseBy = 1)
         {
             SoulsLostCount += increaseBy;
             totalSoulsLost += increaseBy;
-            MainCanvasBehaviour.Instance.UpdateScoreCounter();
+            MainCanvasBehaviour.Instance.UpdateLostSouls();
         }
 
         private float GetSoulsAscendedPercentage()
@@ -123,7 +125,7 @@ namespace SniperProject
             {
                 successMsg = "FAILED: ";
             }
-            Debug.Log("Wave " + CurrentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
+            //Debug.Log("Wave " + CurrentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
         }
 
         #endregion
@@ -131,7 +133,6 @@ namespace SniperProject
         public void WaveComplete()
         {
             IsWaveComplete = true;
-            //StartCoroutine(WaitForTargetsToDisappearCoroutine());
         }
 
         private void Win()
@@ -141,23 +142,9 @@ namespace SniperProject
             GetNextWave();
         }
 
-        private IEnumerator WaitForTargetsToDisappearCoroutine()
-        {
-            bool targetsOnField = LevelManager.Instance.targets.Count > 0;
-            while (targetsOnField)
-            {
-                targetsOnField = LevelManager.Instance.targets.Count > 0;
-                yield return null;
-            }
-            GetWinLossThisWave();
-            GetNextWave();
-        }
-
-
-
         private IEnumerator WaveBreakCoroutine()
         {
-            MainCanvasBehaviour.Instance.UpdateScoreCounter();
+            MainCanvasBehaviour.Instance.UpdateAscendedSouls();
             MainCanvasBehaviour.Instance.WaveUpdater.StartNewWaveAnimation(CurrentWaveIndex);
 
             yield return new WaitForSeconds(secsBetweenWaves);
