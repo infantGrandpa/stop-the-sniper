@@ -15,15 +15,9 @@ namespace SniperProject
             CurrentTarget = newTarget;
         }
 
-
-        private void OnDestroy()
+        private bool ValidateGreaterThan0(float value)
         {
-            WallDeployer.Instance.AdjustWallsToDeploy(1);
-        }
-
-        private bool ValidateGreaterThan0(float property)
-        {
-            return property > 0f;
+            return value > 0f;
         }
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 556306124013736733}
   - component: {fileID: 556306124013736732}
   - component: {fileID: 1384896662375938582}
+  - component: {fileID: 5619631060973836702}
   m_Layer: 0
   m_Name: pre_wrld_waypoint
   m_TagString: Untagged
@@ -58,3 +59,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a60c64950e7b84e9d77cd0c234fa72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notificationPosition: {x: 0, y: 0}
+  onArriveEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5619631060973836702}
+        m_TargetAssemblyTypeName: AudioManager.PlaySound, Assembly-CSharp
+        m_MethodName: PlaySoundHere
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5619631060973836702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556306124013736728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc1bc359aa8eab4c9217e955cf2d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundToPlay: {fileID: 11400000, guid: db5cc4ea0f3e4984e859849f827f5534, type: 2}

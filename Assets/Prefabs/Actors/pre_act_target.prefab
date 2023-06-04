@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 1599892266}
   - component: {fileID: 1599892267}
   - component: {fileID: 8582058135207416542}
+  - component: {fileID: 5062297528854251886}
   m_Layer: 7
   m_Name: pre_act_target
   m_TagString: Untagged
@@ -131,9 +132,9 @@ MonoBehaviour:
   onDeathEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6746863331867592820}
-        m_TargetAssemblyTypeName: SniperProject.TargetBehaviour, Assembly-CSharp
-        m_MethodName: IncreaseLostSoulCountOnDeath
+      - m_Target: {fileID: 5062297528854251886}
+        m_TargetAssemblyTypeName: SniperProject.IncreaseLost, Assembly-CSharp
+        m_MethodName: IncreaseLostSoulsBy1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -349,6 +350,18 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.45, y: 0.45, z: 0}
+--- !u!114 &5062297528854251886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215140654377464896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2203b0b3d03cafd4197a8e00207e25ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6369616272950928252
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,15 +17,26 @@ namespace SniperProject
         [SerializeField] float secsToMinIntensity;
         [SerializeField] Ease minEaseType;
 
-
+        private Sequence currentSequence;
 
         public void Tween()
         {
-            Sequence mySequence = DOTween.Sequence();
+            currentSequence = DOTween.Sequence();
             //Flash to max intensity
-            mySequence.Append(lightToAnimate.DOIntensity(maxIntensity, secsToMaxIntensity).SetEase(maxEaseType));
-            mySequence.Append(lightToAnimate.DOIntensity(0, secsToMinIntensity).SetEase(minEaseType));
+            currentSequence.Append(lightToAnimate.DOIntensity(maxIntensity, secsToMaxIntensity).SetEase(maxEaseType));
+            //Return to min intensity
+            currentSequence.Append(lightToAnimate.DOIntensity(0, secsToMinIntensity).SetEase(minEaseType));
 
+        }
+
+        private void OnDestroy()
+        {
+            if (currentSequence == null)
+            {
+                return;
+            }
+
+            currentSequence.Kill();
         }
     }
 }

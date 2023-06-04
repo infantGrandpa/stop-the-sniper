@@ -45,10 +45,5 @@ namespace SniperProject
             healthSystem.isInvulnerable = true;
             OnInvalid?.Invoke();
         }
-
-        public void IncreaseLostSoulCountOnDeath()
-        {
-            WaveManager.Instance.IncreaseLostSouls();
-        }
     }
 }

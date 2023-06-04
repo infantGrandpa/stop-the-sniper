@@ -19,12 +19,13 @@ namespace SniperProject
 
         private void Start()
         {
-            if (targetWaypoint != null)
+            if (targetWaypoint == null)
             {
-                return;
+                DebugHelper.LogWarning("Target waypoint not set for " + gameObject.name + ". Choosing random waypoint...");
+                targetWaypoint = SpawnController.Instance.GetRandomWaypoint();
             }
-            DebugHelper.LogWarning("Target waypoint not set for " + gameObject.name + ". Choosing random waypoint...");
-            SetTargetWaypoint(SpawnController.Instance.GetRandomWaypoint());
+
+            SetTargetWaypoint(targetWaypoint);
         }
 
 
