@@ -45,7 +45,7 @@ namespace AudioManager
 
             if (defaultParentTransform == null)
             {
-                Debug.LogError("ERROR AudioManager Awake(): Default Parent Transform is null.");
+                Debug.LogError("ERROR AudioManager Awake(): Default Parent Transform is null.", this);
             }
 
             if (mainCameraTransform == null)

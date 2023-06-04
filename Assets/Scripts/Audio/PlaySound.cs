@@ -6,6 +6,9 @@ namespace AudioManager
     {
         public SoundScriptableObject soundToPlay;
 
+        private AudioSource audioSource;
+        private bool muteThisSound;
+
         #region Play Sounds
 
         public virtual void PlaySoundHere()
@@ -17,32 +20,28 @@ namespace AudioManager
         {
             if (soundToPlay == null)
             {
-                Debug.LogError("ERROR AudioManager PlaySound: Provided sound is null");
+                Debug.LogError("ERROR AudioManager PlaySound: Provided sound is null", this);
                 return;
             }
 
-            AudioPlayer audioPlayer = AudioManager.Instance.CreateNewAudioPlayer(useDefaultParent);
-            AudioManager.Instance.RenameGameObjectFromSound(audioPlayer.gameObject, soundToPlay);
+            AudioPlayer audioPlayer = CreateAudioPlayerObject(useDefaultParent);
             audioPlayer.transform.position = position;
-            
-            AudioSource audioSource = audioPlayer.InitializeAudioSource(soundToPlay.soundType);
-            ConvertSoundToAudioClip(audioSource);
+
+            CreateAudioSource(audioPlayer);
         }
 
         public virtual void PlaySoundAtTransform(Transform transformParent)
         {
             if (soundToPlay == null)
             {
-                Debug.LogError("ERROR AudioManager PlaySound: Provided sound is null");
+                Debug.LogError("ERROR AudioManager PlaySound: Provided sound is null", this);
                 return;
             }
 
-            AudioPlayer audioPlayer = AudioManager.Instance.CreateNewAudioPlayer(false);
-            AudioManager.Instance.RenameGameObjectFromSound(audioPlayer.gameObject, soundToPlay);
+            AudioPlayer audioPlayer = CreateAudioPlayerObject();
             audioPlayer.transform.SetParent(transformParent);
 
-            AudioSource audioSource = audioPlayer.InitializeAudioSource(soundToPlay.soundType);
-            ConvertSoundToAudioClip(audioSource);
+            CreateAudioSource(audioPlayer);
         }
 
 
@@ -54,8 +53,56 @@ namespace AudioManager
             audioSource.loop = soundToPlay.loop;
             audioSource.mute = soundToPlay.mute;
 
+            if (muteThisSound)
+            {
+                audioSource.mute = true;
+            }
+
             audioSource.Play();
         }
+
+        private AudioPlayer CreateAudioPlayerObject(bool useDefaultParent = false)
+        {
+            AudioPlayer audioPlayer = AudioManager.Instance.CreateNewAudioPlayer(useDefaultParent);
+            AudioManager.Instance.RenameGameObjectFromSound(audioPlayer.gameObject, soundToPlay);
+
+            return audioPlayer;
+        }
+
+        private void CreateAudioSource(AudioPlayer audioPlayer)
+        {
+            if (audioSource != null)
+            {
+                Destroy(audioSource);
+            }
+
+            audioSource = audioPlayer.InitializeAudioSource(soundToPlay.soundType);
+            ConvertSoundToAudioClip(audioSource);
+
+        }
+
+        public void Mute()
+        {
+            if (audioSource != null)
+            {
+                audioSource.mute = true;
+                return;
+            }
+
+            muteThisSound = true;
+        }
+
+        public void Unmute()
+        {
+            if (audioSource != null)
+            {
+                audioSource.mute = false;
+                return;
+            }
+
+            muteThisSound = false;
+        }
+
         #endregion
     }
 }

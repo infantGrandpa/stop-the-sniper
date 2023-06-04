@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6337459158355606747}
   - component: {fileID: 7564044369283347937}
   - component: {fileID: 549182996012014530}
+  - component: {fileID: 7365034135088161904}
   m_Layer: 9
   m_Name: pre_wep_bullet_particle
   m_TagString: Untagged
@@ -109,23 +110,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27909b91e98f5774bb823d1caf9257ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secsBeforeCanDamage: 0
   damageOnCollision: 1
   damageToTakeOnCollision: 1
   onDamageEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7564044369283347937}
-        m_TargetAssemblyTypeName: SniperProject.OnCommandParticleController, Assembly-CSharp
-        m_MethodName: PlayOnCommandParticleSystems
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &6209078894307716182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +172,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7365034135088161904}
+        m_TargetAssemblyTypeName: AudioManager.PlaySound, Assembly-CSharp
+        m_MethodName: PlaySoundHere
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isInvulnerable: 0
 --- !u!114 &6337459158355606747
 MonoBehaviour:
@@ -211,8 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d420c2110c29ae41809fa1d9c045938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsToSpawn:
-  - {fileID: 2884437799048030908, guid: f041053aa0334d1478b7132aaa0e0a60, type: 3}
+  objectsToSpawn: []
 --- !u!114 &549182996012014530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +226,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32284bc1a0f813b4fabb9b300d35698a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7365034135088161904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503359060256427780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc1bc359aa8eab4c9217e955cf2d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundToPlay: {fileID: 11400000, guid: bb71e2284453f0d459000b4f84513c43, type: 2}
 --- !u!1 &846215044229824599
 GameObject:
   m_ObjectHideFlags: 0

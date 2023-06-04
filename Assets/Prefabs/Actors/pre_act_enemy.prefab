@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 1919362203619735880}
   - component: {fileID: 129425285}
   - component: {fileID: 9214392469760320128}
+  - component: {fileID: 4827842155058353807}
   m_Layer: 11
   m_Name: pre_act_enemy
   m_TagString: Untagged
@@ -140,6 +141,18 @@ MonoBehaviour:
       - m_Target: {fileID: 9214392469760320128}
         m_TargetAssemblyTypeName: AudioManager.PlaySound, Assembly-CSharp
         m_MethodName: PlaySoundHere
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4827842155058353807}
+        m_TargetAssemblyTypeName: SniperProject.SpawnObjectOnCommand, Assembly-CSharp
+        m_MethodName: SpawnObjects
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -381,6 +394,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundToPlay: {fileID: 11400000, guid: 1faf70587414a394b91bde5e815e47e8, type: 2}
+--- !u!114 &4827842155058353807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215140654377464896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d420c2110c29ae41809fa1d9c045938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToSpawn:
+  - {fileID: 6457890130947910638, guid: 3584ac3e878d7dd449b44d2ba4f4c581, type: 3}
 --- !u!1 &4570125782045676790
 GameObject:
   m_ObjectHideFlags: 0

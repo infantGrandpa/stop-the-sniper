@@ -94,7 +94,7 @@ namespace AudioManager
 
             if (newAudioPlayerList == null)
             {
-                Debug.LogError("ERROR AudioPlayer OnEnable: " + gameObject.name + " does not have a valid sound type.");
+                Debug.LogError("ERROR AudioPlayer OnEnable: " + gameObject.name + " does not have a valid sound type.", this);
                 return null;
             }
 
@@ -107,6 +107,11 @@ namespace AudioManager
 
         private void Update()
         {
+            if (audioSource == null)
+            {
+                return;
+            }
+
             if (audioSource.loop || audioSource.isPlaying)
             {
                 return;

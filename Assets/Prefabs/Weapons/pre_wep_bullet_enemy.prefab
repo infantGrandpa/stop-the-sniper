@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 6214191193799422318}
   - component: {fileID: -4243939279841136499}
   - component: {fileID: 5491456770678775713}
+  - component: {fileID: 2527886581771284560}
   m_Layer: 0
   m_Name: pre_wep_bullet_enemy
   m_TagString: Untagged
@@ -438,7 +439,19 @@ MonoBehaviour:
   destroyOn0Health: 1
   onDeathEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2527886581771284560}
+        m_TargetAssemblyTypeName: AudioManager.PlaySound, Assembly-CSharp
+        m_MethodName: PlaySoundHere
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isInvulnerable: 0
 --- !u!70 &5491456770678775713
 CapsuleCollider2D:
@@ -456,3 +469,16 @@ CapsuleCollider2D:
   m_Offset: {x: -0.04, y: 0}
   m_Size: {x: 0.28, y: 0.05}
   m_Direction: 1
+--- !u!114 &2527886581771284560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139691230043164915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc1bc359aa8eab4c9217e955cf2d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundToPlay: {fileID: 11400000, guid: 09ccfaf75e872544dbdd56653da71e78, type: 2}
