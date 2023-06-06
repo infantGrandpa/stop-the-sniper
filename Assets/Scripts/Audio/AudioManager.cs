@@ -24,8 +24,8 @@ namespace AudioManager
         private static AudioManager _instance;
 
         [SerializeField] SoundScriptableObject[] soundsToLoop;
-        [SerializeField] Transform defaultParentTransform;
-        [SerializeField] Transform mainCameraTransform;
+        public Transform defaultParentTransform;
+        public Transform mainCameraTransform;
 
         public float masterSFXVolume { get; private set; }
         public float masterMusicVolume { get; private set; }
@@ -42,11 +42,6 @@ namespace AudioManager
         private void Awake()
         {
             DontDestroyOnLoad(transform.parent);
-
-            if (defaultParentTransform == null)
-            {
-                Debug.LogError("ERROR AudioManager Awake(): Default Parent Transform is null.", this);
-            }
 
             if (mainCameraTransform == null)
             {
@@ -73,7 +68,6 @@ namespace AudioManager
             {
                 GameObject newObject = new();
                 
-
                 PlaySound playSound = newObject.AddComponent<PlaySound>();
                 playSound.soundToPlay = thisSound;
                 playSound.PlaySoundAtTransform(mainCameraTransform);
@@ -95,7 +89,7 @@ namespace AudioManager
             RenameGameObjectFromSound(newGameObject);
 
             AudioPlayer audioPlayer = newGameObject.AddComponent<AudioPlayer>();
-            if (useDefaultParent)
+            if (useDefaultParent && defaultParentTransform != null)
             {
                 newGameObject.transform.SetParent(defaultParentTransform);
             }

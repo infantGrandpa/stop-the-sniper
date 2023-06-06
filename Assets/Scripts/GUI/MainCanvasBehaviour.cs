@@ -51,7 +51,11 @@ namespace SniperProject
 
         public Vector3 ConvertCanvasToWorld(Vector3 targetPosition)
         {
-            Vector3 worldPosition = LevelManager.Instance.MainCamera.ScreenToWorldPoint(targetPosition);
+            Ray rayFromCameraToCanvas = LevelManager.Instance.MainCamera.ScreenPointToRay(targetPosition);
+            LevelManager.Instance.LevelPlane.Raycast(rayFromCameraToCanvas, out float distanceFromCamera);
+            Vector3 worldPosition = rayFromCameraToCanvas.GetPoint(distanceFromCamera);
+
+            //Vector3 worldPosition = LevelManager.Instance.MainCamera.ScreenToWorldPoint(targetPosition);
             return worldPosition;
         }
 

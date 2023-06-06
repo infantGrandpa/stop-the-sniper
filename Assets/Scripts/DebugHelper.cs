@@ -4,46 +4,49 @@ namespace SniperProject
 {
     public class DebugHelper
     {
-        public static void LogError(string errorMessage)
+        private enum MessageType
         {
-            var stackTrace = new System.Diagnostics.StackTrace();
-            var callingFrame = stackTrace.GetFrame(1); // Skip current frame
-
-            string className = callingFrame.GetMethod().DeclaringType.Name;
-            string methodName = callingFrame.GetMethod().Name;
-
-            string fullErrorMessage = string.Format("ERROR - {0} {1}(): {2}", className, methodName, errorMessage);
-
-            Object context = callingFrame.GetMethod().DeclaringType == typeof(DebugHelper) ? null : GameObject.FindObjectOfType(callingFrame.GetMethod().DeclaringType);
-
-            if (context == null)
-            {
-                Debug.LogError(fullErrorMessage);
-                return;
-            }
-
-            Debug.LogError(fullErrorMessage, context);
+            Default,
+            Warning,
+            Error
         }
 
-        public static void LogWarning(string warningMessage)
+
+        #region Messages
+        public static void LogError(string message)
         {
             var stackTrace = new System.Diagnostics.StackTrace();
             var callingFrame = stackTrace.GetFrame(1); // Skip current frame
 
-            string className = callingFrame.GetMethod().DeclaringType.Name;
-            string methodName = callingFrame.GetMethod().Name;
+            string fullMessage = BuildMessage(callingFrame, message, MessageType.Error);
 
-            string fullWarningMessage = string.Format("Warning - {0} {1}(): {2}", className, methodName, warningMessage);
-
-            Object context = callingFrame.GetMethod().DeclaringType == typeof(DebugHelper) ? null : GameObject.FindObjectOfType(callingFrame.GetMethod().DeclaringType);
+            Object context = GetContextFromCallingFrame(callingFrame);
 
             if (context == null)
             {
-                Debug.LogWarning(fullWarningMessage);
+                Debug.LogError(fullMessage);
                 return;
             }
 
-            Debug.LogWarning(fullWarningMessage, context);
+            Debug.LogError(fullMessage, context);
+        }
+
+        public static void LogWarning(string message)
+        {
+            var stackTrace = new System.Diagnostics.StackTrace();
+            var callingFrame = stackTrace.GetFrame(1); // Skip current frame
+
+            string fullMessage = BuildMessage(callingFrame, message, MessageType.Warning);
+
+            Object context = GetContextFromCallingFrame(callingFrame);
+
+            if (context == null)
+            {
+                Debug.LogWarning(fullMessage);
+                return;
+            }
+
+            Debug.LogWarning(fullMessage, context);
         }
 
         public static void Log(string message, bool showBreadcrumbs = false)
@@ -51,16 +54,13 @@ namespace SniperProject
             var stackTrace = new System.Diagnostics.StackTrace();
             var callingFrame = stackTrace.GetFrame(1); // Skip current frame
 
-            string className = callingFrame.GetMethod().DeclaringType.Name;
-            string methodName = callingFrame.GetMethod().Name;
-
             string fullMessage = message;
             if (showBreadcrumbs)
             {
-                fullMessage = string.Format("{0} {1}(): {2}", className, methodName, message);
+                fullMessage = BuildMessage(callingFrame, message, MessageType.Warning);
             }
 
-            Object context = callingFrame.GetMethod().DeclaringType == typeof(DebugHelper) ? null : GameObject.FindObjectOfType(callingFrame.GetMethod().DeclaringType);
+            Object context = GetContextFromCallingFrame(callingFrame);
 
             if (context == null)
             {
@@ -70,5 +70,50 @@ namespace SniperProject
 
             Debug.Log(fullMessage, context);
         }
+        #endregion 
+
+
+        #region Utilties
+        private static Object GetContextFromCallingFrame(System.Diagnostics.StackFrame callingFrame)
+        {
+            System.Type declaringType = callingFrame.GetMethod().DeclaringType;
+            
+            if (declaringType == typeof(DebugHelper))
+            {
+                return null;
+            }
+
+            if (!typeof(Object).IsAssignableFrom(declaringType))
+            {
+                return null;
+            }
+
+            Object context = GameObject.FindObjectOfType(declaringType);
+            return context;
+        }
+
+        private static string BuildMessage(System.Diagnostics.StackFrame callingFrame, string message, MessageType messageType = MessageType.Default)
+        {
+            string className = callingFrame.GetMethod().DeclaringType.Name;
+            string methodName = callingFrame.GetMethod().Name;
+
+            string prefix;
+            switch (messageType)
+            {
+                case MessageType.Error:
+                    prefix = "ERROR";
+                    break;
+                case MessageType.Warning:
+                    prefix = "Warning";
+                    break;
+                default:
+                    prefix = "";
+                    break;
+            }
+
+            string fullMessage = string.Format("{0} - {1} {2}(): {3}", prefix, className, methodName, message);
+            return fullMessage;
+        }
+        #endregion
     }
 }

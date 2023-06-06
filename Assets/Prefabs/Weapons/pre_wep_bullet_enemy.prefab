@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: -4243939279841136499}
   - component: {fileID: 5491456770678775713}
   - component: {fileID: 2527886581771284560}
+  - component: {fileID: 4226744105104316843}
   m_Layer: 0
   m_Name: pre_wep_bullet_enemy
   m_TagString: Untagged
@@ -452,6 +453,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4226744105104316843}
+        m_TargetAssemblyTypeName: SniperProject.SpawnObjectOnCommand, Assembly-CSharp
+        m_MethodName: SpawnObjects
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isInvulnerable: 0
 --- !u!70 &5491456770678775713
 CapsuleCollider2D:
@@ -482,3 +495,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundToPlay: {fileID: 11400000, guid: 09ccfaf75e872544dbdd56653da71e78, type: 2}
+--- !u!114 &4226744105104316843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139691230043164915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d420c2110c29ae41809fa1d9c045938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToSpawn:
+  - {fileID: 8947229272580642406, guid: 93d900263db33234abe6f7a571be295e, type: 3}
+  matchRotation: 1

@@ -6,6 +6,8 @@ namespace SniperProject
     public class AnimateLightFlash : MonoBehaviour
     {
         [SerializeField] Light lightToAnimate;
+        [SerializeField] bool playOnStart;
+
 
         [Header("To Max Intensity")]
         [SerializeField] float maxIntensity;
@@ -18,6 +20,16 @@ namespace SniperProject
         [SerializeField] Ease minEaseType;
 
         private Sequence currentSequence;
+
+        private void Start()
+        {
+            if (!playOnStart)
+            {
+                return;
+            }
+
+            Tween();
+        }
 
         public void Tween()
         {

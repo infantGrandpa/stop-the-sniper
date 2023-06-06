@@ -19,7 +19,7 @@ namespace SniperProject
 
         private Vector3 GetDirectionToMouse()
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePosition = MainCanvasBehaviour.Instance.ConvertCanvasToWorld(Input.mousePosition);
             Vector3 direction = mousePosition - transform.position;
             return direction;
         }
