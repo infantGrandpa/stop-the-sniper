@@ -50,7 +50,6 @@ namespace SniperProject
                     break;
                 case TransitionState:
                     nextState = GetNextStateFromTransition();
-                    DebugHelper.Log("Current State: " +  currentStateName + "  Next state: " + nextState.GetType().Name);
                     break;
                 default:
                     nextState = new PauseState();
@@ -66,7 +65,7 @@ namespace SniperProject
             currentState = newState;
             currentState?.EnterState();
 
-            currentStateName = currentState != null ? currentState.GetType().Name : "None";
+            currentStateName = currentState?.GetType().Name ?? "None";
             nextState = currentState is TransitionState ? ((TransitionState)currentState).nextState.GetType().Name : "N/A";
         }
 

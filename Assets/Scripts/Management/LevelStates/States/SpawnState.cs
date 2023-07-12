@@ -21,7 +21,7 @@ namespace SniperProject
 
         public bool IsStateComplete()
         {
-            return WaveManager.Instance.IsWaveComplete;
+            return WaveManager.Instance.IsWaveComplete();
         }
 
     }

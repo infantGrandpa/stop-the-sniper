@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f72e5db35dc6f4993995ef76836138, type: 3}
+  m_Name: so_wave_4
+  m_EditorClassIdentifier: 
+  soulsToSpawn: 12
+  secsBetweenSoulSpawns: {x: 2.5, y: 5}
+  rangeToSpawnAllSouls: {x: 30, y: 60}
+  ascensionRatioToWin: 0.5
+  soulTypes:
+  - {fileID: 4215140654377464896, guid: 25ed33c5ee0709c4eb73dde140d4d127, type: 3}
+  canisterData:
+  - prefabToSpawn: {fileID: 8184663384438872009, guid: f112c8b413322314c9bbca085d48eaf9, type: 3}
+    toSpawnThisWave: 4
+  - prefabToSpawn: {fileID: 7213359195393682857, guid: 1632dfdd8a993c9479a4e83c44840ef1, type: 3}
+    toSpawnThisWave: 3
+  secsBetweenCanisterSpawns: {x: 1.5, y: 5}
+  rangeToSpawnAllCanisters: {x: 10.5, y: 35}
+  totalCanistersToSpawn: 7
+  totalAsteroidsToSpawn: 10
+  canistersToSpawn: 10
+  canisterTypes:
+  - {fileID: 8184663384438872009, guid: f112c8b413322314c9bbca085d48eaf9, type: 3}
+  secsBetweenCanisters: {x: 1.5, y: 5}

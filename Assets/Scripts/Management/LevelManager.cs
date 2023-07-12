@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using System.Collections;
 
@@ -32,6 +33,10 @@ namespace SniperProject
         [SerializeField, ValueDropdown("GetNormals", AppendNextDrawer = true, DisableGUIInAppendedDrawer = true)] 
         Vector3 planeNormal = Vector3.forward;
 
+        [SerializeField] UnityEvent onPause;
+
+        [SerializeField] UnityEvent onUnpause;
+
         private void Awake()
         {
             CreateDynamicTransform();
@@ -42,6 +47,14 @@ namespace SniperProject
 
             LevelPlane = new Plane(planeNormal, transform.position);
 
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnEscape();
+            }
         }
 
         public GameObject InstantiateObjectOnDyanmicTransform(GameObject original)
@@ -99,6 +112,36 @@ namespace SniperProject
             }
 
             Gizmos.DrawWireCube(transform.position, cubeSizeVector);
+        }
+
+        public void PauseGame()
+        {
+            onPause?.Invoke();
+            Time.timeScale = 0;
+            
+        }
+
+        public void UnpauseGame()
+        {
+            Time.timeScale = 1;
+            onUnpause?.Invoke();
+        }
+
+        private void OnEscape()
+        {
+            if (WaveManager.Instance.HasWonGame)
+            {
+                return;
+            }
+
+            if (Time.timeScale == 0)
+            {
+                UnpauseGame();
+            }
+            else
+            {
+                PauseGame();
+            }
         }
     }
 }

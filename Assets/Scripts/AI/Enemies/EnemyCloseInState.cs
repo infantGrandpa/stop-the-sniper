@@ -16,7 +16,7 @@ namespace SniperProject
 
         public override void UpdateState()
         {
-
+            enemyBehaviour.SetDestinationToCurrentTarget();
         }
 
         public override void ExitState()
@@ -31,11 +31,7 @@ namespace SniperProject
                 return true;
             }
 
-            Vector2 currentPosition = enemyBehaviour.transform.position;
-            Vector2 targetPosition = enemyBehaviour.CurrentTarget.transform.position;
-            float distanceToTarget = Vector2.Distance(currentPosition, targetPosition);
-
-            if (distanceToTarget <= enemyBehaviour.attackRange)
+            if (enemyBehaviour.IsCurrentTargetInRange())
             {
                 return true;
             }

@@ -7,6 +7,7 @@ namespace SniperProject
         public void EnterState()
         {
             WallDeployer.Instance.InitializeNewDeployPhase();
+            TargetReticleController.Instance.HideReticle();
         }
         public void UpdateState()
         {
@@ -15,7 +16,7 @@ namespace SniperProject
 
         public void ExitState()
         {
-
+            TargetReticleController.Instance.ShowReticle();
         }
 
         public bool IsStateComplete()

@@ -16,7 +16,12 @@ namespace SniperProject
 
         public override void UpdateState()
         {
-            
+            if (enemyBehaviour.CurrentTarget != null)
+            {
+                return;
+            }
+
+            enemyBehaviour.GetNewTarget();
         }
 
         public override void ExitState()

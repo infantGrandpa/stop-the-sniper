@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  maxRotationSpeed: 2.5
+  maxRotationSpeed: 1.25
   secsBeforeRotationAllowed: 0.3
   secsToFullRotation: 0.7
 --- !u!114 &-3357945461628450537
@@ -200,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystems:
   - {fileID: 6129548514645615990}
+  secsToDestroyAnyway: 10
 --- !u!114 &7564044369283347937
 MonoBehaviour:
   m_ObjectHideFlags: 0

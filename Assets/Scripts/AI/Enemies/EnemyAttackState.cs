@@ -11,27 +11,28 @@ namespace SniperProject
 
         public override void EnterState()
         {
-            DebugHelper.Log("Entering Attack state");
+
+            enemyBehaviour.MatchTargetSpeed();
         }
 
         public override void UpdateState()
         {
-            
+            enemyBehaviour.SetDestinationToCurrentTarget();
         }
 
         public override void ExitState()
         {
-            DebugHelper.Log("Exiting Attack state");
+            enemyBehaviour.ResetSpeed();
         }
 
         public override bool IsStateComplete()
         {
-            if (enemyBehaviour == null)
+            if (enemyBehaviour == null || enemyBehaviour.CurrentTarget == null)
             {
                 return true;
             }
 
-            if (enemyBehaviour.CurrentTarget == null)
+            if (!enemyBehaviour.IsCurrentTargetInRange())
             {
                 return true;
             }

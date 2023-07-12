@@ -26,6 +26,7 @@ namespace AudioManager
         [SerializeField] SoundScriptableObject[] soundsToLoop;
         public Transform defaultParentTransform;
         public Transform mainCameraTransform;
+        public Transform persistantTransform;
 
         public float masterSFXVolume { get; private set; }
         public float masterMusicVolume { get; private set; }
@@ -41,7 +42,9 @@ namespace AudioManager
 
         private void Awake()
         {
-            DontDestroyOnLoad(transform.parent);
+            CheckForDuplicateInstance();
+            SetPersistantTransform();
+            DontDestroyOnLoad(persistantTransform);
 
             if (mainCameraTransform == null)
             {
@@ -70,7 +73,7 @@ namespace AudioManager
                 
                 PlaySound playSound = newObject.AddComponent<PlaySound>();
                 playSound.soundToPlay = thisSound;
-                playSound.PlaySoundAtTransform(mainCameraTransform);
+                playSound.PlaySoundAtTransform(persistantTransform);
 
                 RenameGameObjectFromSound(newObject, thisSound);
 
@@ -78,6 +81,30 @@ namespace AudioManager
             }
         }
 
+        private void SetPersistantTransform()
+        {
+            if (persistantTransform != null)
+            {
+                return;
+            }
+
+            if (transform.parent != null)
+            {
+                persistantTransform = transform.parent;
+                return;
+            }
+
+            persistantTransform = transform;
+        }
+
+        private void CheckForDuplicateInstance()
+        {
+            if (Instance != null & Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+        }
 
         #endregion
 

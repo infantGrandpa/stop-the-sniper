@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace SniperProject
 {
     public class SpawnerBehaviour : MonoBehaviour
     {
+        private enum SpawnerType
+        {
+            Targets,
+            Canisters
+        }
+        [SerializeField, EnumToggleButtons] SpawnerType spawnerType;
+        
         private IOnSpawn onSpawnBehaviour;
 
         public bool IsOccupied { get; private set; }
@@ -17,25 +23,65 @@ namespace SniperProject
 
         private void OnEnable()
         {
-            SpawnController.Instance.spawners.Add(this);
+            
+            switch (spawnerType)
+            {
+                case SpawnerType.Canisters:
+                    CanisterSpawnController2.Instance.spawners.Add(this);
+                    break;
+                default:
+                    TargetSpawnController.Instance.spawners.Add(this);
+                    break;
+            }
+            
+            //SpawnController.Instance.spawners.Add(this);
+
         }
 
         private void OnDisable()
         {
-            if (SpawnController.Instance == null)
+            switch (spawnerType)
             {
-                return;
+                case SpawnerType.Canisters:
+                    if (CanisterSpawnController2.Instance == null) { return; }
+                    CanisterSpawnController2.Instance.spawners.Remove(this);
+                    break;
+                default:
+                    if (TargetSpawnController.Instance == null) { return; }
+                    TargetSpawnController.Instance.spawners.Remove(this);
+                    break;
             }
-            SpawnController.Instance.spawners.Remove(this);
+
+            //if (SpawnController.Instance == null)
+            //{
+            //    return;
+            //}
+            //SpawnController.Instance.spawners.Remove(this);
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (!collision.TryGetComponent(out TargetBehaviour target))
+            CheckOccupied(collision);
+        }
+
+        private void CheckOccupied(Collider2D collision)
+        {
+            //Ignore the collision of its not the proper type of object
+            switch (spawnerType)
             {
-                return;
+                case SpawnerType.Canisters:
+                    if (!collision.TryGetComponent(out CanisterBehaviour canister)) { return; }
+                    break;
+                default:
+                    if (!collision.TryGetComponent(out TargetBehaviour target)){ return; }
+                    break;
             }
 
+
+            //if (!collision.TryGetComponent(out TargetBehaviour target))
+            //{
+            //    return;
+            //}
             IsOccupied = false;
         }
 
@@ -55,6 +101,7 @@ namespace SniperProject
             GameObject instance = LevelManager.Instance.InstantiateObjectOnDyanmicTransform(objectToSpawn);
             instance.transform.position = transform.position;
             IsOccupied = true;
+            instance.SetActive(true); //Fucking hack but I don't know why canisters are being spawned inactive
 
             if (onSpawnBehaviour != null)
             {
@@ -62,6 +109,12 @@ namespace SniperProject
             }
 
             return instance;
+        }
+
+        //Hack but can't find why they won't unoccupy themselves. Should get called for canisters at the end of each wave.
+        public void MarkUnoccupied()
+        {
+            IsOccupied = false;
         }
 
         private void OnDrawGizmos()

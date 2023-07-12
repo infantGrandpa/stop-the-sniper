@@ -6,6 +6,22 @@ namespace SniperProject
     [RequireComponent(typeof (Image))]
     public class TargetReticleController : MonoBehaviour
     {
+        public static TargetReticleController Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = FindObjectOfType(typeof(TargetReticleController)) as TargetReticleController;
+
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+            }
+        }
+        private static TargetReticleController _instance;
+
         private Image reticleImage;
         private AnimateMoveToPosition animateMove;
         private AnimateScale animateScale;
@@ -28,11 +44,12 @@ namespace SniperProject
 
             if (target == null)
             {
-                HideReticle();
+                //HideReticle();
+                SetReticlePosition(Input.mousePosition, false);
                 return;
             }
 
-            ShowReticle();
+            //ShowReticle();
             SetReticlePosition(target.transform.position);
         }
 
@@ -48,9 +65,10 @@ namespace SniperProject
             reticleImage.enabled = true;
         }
 
-        public void SetReticlePosition(Vector3 newPosition)
+        public void SetReticlePosition(Vector3 newPosition, bool isWorldPosition = true)
         {
-            Vector3 screenPosition = MainCanvasBehaviour.Instance.ConvertWorldToCanvas(newPosition);
+            Vector3 screenPosition = isWorldPosition ? MainCanvasBehaviour.Instance.ConvertWorldToCanvas(newPosition) : newPosition;
+          
             if (animateMove == null)
             {
                 transform.position = screenPosition;

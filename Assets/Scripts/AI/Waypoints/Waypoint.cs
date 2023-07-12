@@ -16,16 +16,16 @@ namespace SniperProject
 
         private void OnEnable()
         {
-            SpawnController.Instance.waypoints.Add(this);
+            TargetSpawnController.Instance.waypoints.Add(this);
         }
 
         private void OnDisable()
         {
-            if (SpawnController.Instance == null)
+            if (TargetSpawnController.Instance == null)
             {
                 return;
             }
-            SpawnController.Instance.waypoints.Remove(this);
+            TargetSpawnController.Instance.waypoints.Remove(this);
         }
 
         public Waypoint GetNextWaypoint()

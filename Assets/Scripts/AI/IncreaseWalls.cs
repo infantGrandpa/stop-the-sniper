@@ -4,12 +4,9 @@ namespace SniperProject
 {
     public class IncreaseWalls : MonoBehaviour
     {
-        public void IncreaseWallsBy1()
-        {
-            IncreaseDeployableWalls();
-        }
+        public int increaseBy = 1;
 
-        public void IncreaseDeployableWalls(int increaseBy = 1)
+        public void IncreaseWallsCount()
         {
             WallDeployer.Instance.AdjustWallsToDeploy(increaseBy);
             FloatingNotificationController.Instance.CreateWallsNotification(transform.position, increaseBy);

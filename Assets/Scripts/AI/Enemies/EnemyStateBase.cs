@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace SniperProject
 {
+    [System.Serializable]
     public abstract class EnemyStateBase
     {
         protected EnemyBehaviour enemyBehaviour;

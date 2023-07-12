@@ -33,6 +33,7 @@ namespace SniperProject
 
         #endregion
 
+
         #region Spawner Control
         public void LoadNewWave(WaveScriptableObject newWave)
         {
@@ -178,7 +179,7 @@ namespace SniperProject
 
         private float GetSecsBeforeNextSpawn()
         {
-            return Random.Range(currentWave.secsBetweenSpawns.x, currentWave.secsBetweenSpawns.y);
+            return Random.Range(currentWave.secsBetweenSoulSpawns.x, currentWave.secsBetweenSoulSpawns.y);
         }
 
         private GameObject ChooseRandomSpawnObject()

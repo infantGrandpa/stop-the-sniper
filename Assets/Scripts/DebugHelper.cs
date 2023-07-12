@@ -2,8 +2,11 @@ using UnityEngine;
 
 namespace SniperProject
 {
+
     public class DebugHelper
     {
+#if UNITY_EDITOR
+
         private enum MessageType
         {
             Default,
@@ -76,8 +79,12 @@ namespace SniperProject
         #region Utilties
         private static Object GetContextFromCallingFrame(System.Diagnostics.StackFrame callingFrame)
         {
+            if (callingFrame == null)
+            {
+                return null;
+            }
+
             System.Type declaringType = callingFrame.GetMethod().DeclaringType;
-            
             if (declaringType == typeof(DebugHelper))
             {
                 return null;
@@ -115,5 +122,27 @@ namespace SniperProject
             return fullMessage;
         }
         #endregion
+#else
+
+        #region Dummy Implementations
+       
+        public static void LogError(string message)
+        {
+            //Do Nothing
+        }
+
+        public static void LogWarning(string message)
+        {
+            //Do Nothing
+        }
+
+        public static void Log(string message, bool showBreadcrumbs = false)
+        {
+            //Do Nothing
+        } 
+
+        #endregion
+
+#endif
     }
 }

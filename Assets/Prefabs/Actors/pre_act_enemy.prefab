@@ -128,7 +128,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 129425285}
         m_TargetAssemblyTypeName: SniperProject.IncreaseWalls, Assembly-CSharp
-        m_MethodName: IncreaseWallsBy1
+        m_MethodName: IncreaseWallsCount
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed8ed7bb0ad97149bac95c6fdd48638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTurningRadius: 360
 --- !u!114 &8582058135207416542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8a2115d3a9792479dc5cc73e0c6608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  increaseBy: 1
 --- !u!114 &9214392469760320128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToSpawn:
   - {fileID: 6457890130947910638, guid: 3584ac3e878d7dd449b44d2ba4f4c581, type: 3}
+  matchRotation: 0
 --- !u!1 &4570125782045676790
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightToAnimate: {fileID: 2647388142421803384}
+  playOnStart: 0
   maxIntensity: 10
   secsToMaxIntensity: 0.1
   maxEaseType: 11
@@ -725,6 +729,10 @@ PrefabInstance:
     - target: {fileID: 2718758498934427581, guid: 70926c137f79b60498c8afd79966da35, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251834779438029347, guid: 70926c137f79b60498c8afd79966da35, type: 3}
+      propertyPath: secsBetweenShots
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3251834779438029347, guid: 70926c137f79b60498c8afd79966da35, type: 3}
       propertyPath: onFireEvent.m_PersistentCalls.m_Calls.Array.size

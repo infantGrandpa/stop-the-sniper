@@ -74,6 +74,8 @@ GameObject:
   - component: {fileID: 5062297528854251886}
   - component: {fileID: 277388265713710779}
   - component: {fileID: 1029422970517346025}
+  - component: {fileID: 2228995297570289850}
+  - component: {fileID: 866690068088308800}
   m_Layer: 7
   m_Name: pre_act_target
   m_TagString: Untagged
@@ -182,6 +184,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 866690068088308800}
+        m_TargetAssemblyTypeName: AudioManager.PlaySound, Assembly-CSharp
+        m_MethodName: PlaySoundHere
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isInvulnerable: 0
 --- !u!50 &8901867755729888903
 Rigidbody2D:
@@ -203,7 +217,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!70 &4430833993784769276
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -259,10 +273,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   centerOffsetCompatibility: NaN
   orientation: 1
-  enableRotation: 0
+  enableRotation: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
-  rotationSpeed: 360
+  rotationSpeed: 45
   slowdownDistance: 0.6
   pickNextWaypointDist: 1
   endReachedDistance: 0.2
@@ -323,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed8ed7bb0ad97149bac95c6fdd48638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTurningRadius: 360
 --- !u!114 &8582058135207416542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +430,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToSpawn:
   - {fileID: 6457890130947910638, guid: 3584ac3e878d7dd449b44d2ba4f4c581, type: 3}
+  matchRotation: 0
+--- !u!114 &2228995297570289850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215140654377464896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 1
+  subdivisions: 3
+  iterations: 2
+  strength: 0.5
+  uniformLength: 1
+  maxSegmentLength: 2
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
+--- !u!114 &866690068088308800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215140654377464896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc1bc359aa8eab4c9217e955cf2d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundToPlay: {fileID: 11400000, guid: 5c4503369c35a4849b0b497286f947bc, type: 2}
 --- !u!1 &6369616272950928252
 GameObject:
   m_ObjectHideFlags: 0

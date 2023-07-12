@@ -17,9 +17,9 @@ TagManager:
   - Projectiles
   - NonCollidingObjects
   - Enemies
-  - 
-  - 
-  - 
+  - BackgroundAllies
+  - BackgroundEnemies
+  - Canisters
   - 
   - 
   - 

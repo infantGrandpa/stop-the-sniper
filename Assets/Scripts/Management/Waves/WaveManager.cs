@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SniperProject
 {
@@ -33,10 +34,15 @@ namespace SniperProject
         public int SoulsLostCount { get; private set; }
         public int SoulsThisWave { get; private set; }
 
-        public bool IsWaveComplete { get; private set; }
-
         private int totalSoulsAscended;
         private int totalSoulsLost;
+
+        public UnityEvent onWinEvent;
+
+        [SerializeField] UnityEvent onWaveCompleteEvent;
+
+        public bool HasWonGame { get; private set; }
+        
 
         #endregion
 
@@ -54,10 +60,11 @@ namespace SniperProject
             {
                 DebugHelper.LogError("No assigned waves.");
             }
+            HasWonGame = false;
         }
 
         public void GetNextWave()
-        {
+        {            
             CurrentWaveIndex++;
 
             if (CurrentWaveIndex > listOfWaves.Count - 1)
@@ -73,12 +80,14 @@ namespace SniperProject
         {
             currentWave = listOfWaves[CurrentWaveIndex];
 
-            SoulsAscendedCount = 0;
-            SoulsLostCount = 0;
-            SoulsThisWave = currentWave.soulsToSpawn;
+            //SoulsAscendedCount = 0;
+            //SoulsLostCount = 0;
 
-            IsWaveComplete = false;
-            SpawnController.Instance.LoadNewWave(currentWave);
+            SoulsThisWave = currentWave.soulsToSpawn;
+            MainCanvasBehaviour.Instance.UpdateAllCounters();
+
+            TargetSpawnController.Instance.LoadNewWave(currentWave);
+            CanisterSpawnController2.Instance.LoadNewWave(currentWave);
         }
 
         #endregion
@@ -111,35 +120,19 @@ namespace SniperProject
             return soulsPerc;
         }
 
-        public void GetWinLossThisWave()
-        {
-            if (currentWave == null)
-            {
-                return;
-            }
-
-            float soulsAscendedPercentage = GetSoulsAscendedPercentage();
-
-            string successMsg = "SUCCESS: ";
-            if (soulsAscendedPercentage < currentWave.ascensionRatioToWin)
-            {
-                successMsg = "FAILED: ";
-            }
-            //Debug.Log("Wave " + CurrentWaveIndex + " completed. " + successMsg + (soulsAscendedPercentage * 100).ToString() + "%");
-        }
-
         #endregion
 
         public void WaveComplete()
         {
-            IsWaveComplete = true;
+            onWaveCompleteEvent?.Invoke();
         }
 
         private void Win()
         {
-            Debug.Log("Won! Resetting...");
-            CurrentWaveIndex = -1;
-            GetNextWave();
+            Debug.Log("Won!");
+            onWinEvent?.Invoke();
+            CanvasPauseMenu.Instance.ShowWinScreen(totalSoulsAscended, totalSoulsLost);
+            HasWonGame = true;
         }
 
         private IEnumerator WaveBreakCoroutine()
@@ -151,13 +144,9 @@ namespace SniperProject
             StartNewWave();
         }
 
-        [ContextMenu("Complete This Wave")]
-        public void ForceWaveComplete()
+        public bool IsWaveComplete()
         {
-            currentWave = listOfWaves[CurrentWaveIndex];
-            SpawnController.Instance.WaveComplete();
+            return TargetSpawnController.Instance.spawnedThisWave < SoulsThisWave;
         }
-
-
     }
 }

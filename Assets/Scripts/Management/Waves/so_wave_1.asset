@@ -12,9 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f72e5db35dc6f4993995ef76836138, type: 3}
   m_Name: so_wave_1
   m_EditorClassIdentifier: 
-  soulsToSpawn: 3
-  secsBetweenSpawns: {x: 0, y: 3.1406}
+  soulsToSpawn: 5
+  secsBetweenSoulSpawns: {x: 3.5, y: 8}
+  rangeToSpawnAllSouls: {x: 17.5, y: 40}
   ascensionRatioToWin: 0.5
   soulTypes:
   - {fileID: 4215140654377464896, guid: 25ed33c5ee0709c4eb73dde140d4d127, type: 3}
-  enemyTypes: []
+  canisterData:
+  - prefabToSpawn: {fileID: 8184663384438872009, guid: f112c8b413322314c9bbca085d48eaf9, type: 3}
+    toSpawnThisWave: 5
+  - prefabToSpawn: {fileID: 7213359195393682857, guid: 1632dfdd8a993c9479a4e83c44840ef1, type: 3}
+    toSpawnThisWave: 1
+  secsBetweenCanisterSpawns: {x: 2.5, y: 3.25}
+  rangeToSpawnAllCanisters: {x: 15, y: 19.5}
+  totalCanistersToSpawn: 6
+  totalAsteroidsToSpawn: 7
+  canistersToSpawn: 7
+  canisterTypes:
+  - {fileID: 8184663384438872009, guid: f112c8b413322314c9bbca085d48eaf9, type: 3}
+  secsBetweenCanisters: {x: 0, y: 5}

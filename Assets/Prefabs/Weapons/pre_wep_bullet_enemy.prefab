@@ -409,9 +409,9 @@ MonoBehaviour:
   onDamageEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7564044369283347937, guid: 1024a60b4f0b2ab439e8efbc7e44553a, type: 3}
-        m_TargetAssemblyTypeName: SniperProject.OnCommandParticleController, Assembly-CSharp
-        m_MethodName: PlayOnCommandParticleSystems
+      - m_Target: {fileID: 4226744105104316843}
+        m_TargetAssemblyTypeName: SniperProject.SpawnObjectOnCommand, Assembly-CSharp
+        m_MethodName: SpawnObjects
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

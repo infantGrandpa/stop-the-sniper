@@ -12,6 +12,8 @@ namespace SniperProject
         private float maxParticleLife;
         private bool isLooping;     //If no effects are looping, we can start destroying the particle system immediately
 
+        [SerializeField] float secsToDestroyAnyway = 5f;
+
         private void Start()
         {
             GetParticleLoop();
@@ -21,6 +23,8 @@ namespace SniperProject
             {
                 StartDestroyCoroutineAfterDelay(maxParticleLife);
             }
+
+            StartCoroutine(DestroyAnywayCoroutine());
         }
 
         private void GetParticleLoop()
@@ -85,6 +89,32 @@ namespace SniperProject
         {
             yield return new WaitForSeconds(secsToDelay);
             StartDestroyCoroutine();
+        }
+
+        public void DisableAllEmittorObjects()
+        {
+            foreach (ParticleSystem thisParticleSystem in particleSystems)
+            {
+                GameObject thisGameObject = thisParticleSystem.gameObject;
+                thisGameObject.SetActive(false);
+            }
+        }
+
+        public void EnableAllEmittorObjects()
+        {
+            foreach (ParticleSystem thisParticleSystem in particleSystems)
+            {
+                GameObject thisGameObject = thisParticleSystem.gameObject;
+                thisGameObject.SetActive(true);
+            }
+        }
+
+        private IEnumerator DestroyAnywayCoroutine()
+        {
+            //Hacky way to make sure that particles get destroyed and we don't start accumulating them forever and ever and ever and ever
+            yield return new WaitForSeconds(secsToDestroyAnyway);
+
+            Destroy(gameObject);
         }
     }
 }

@@ -7,11 +7,17 @@ namespace SniperProject
     [RequireComponent(typeof(AIPath))]
     public class MoveController : MonoBehaviour
     {
+        [SerializeField, Range(0, 360f)] 
+        float maxTurningRadius = 360f;
+
         private Transform targetTransform;
         private AIDestinationSetter destinationSetter;
         private AIPath path;
 
         private IMoveOrder moveOrder;
+
+        private Vector2 targetDestinationPosition;
+        private Vector2 tempDestinationPosition;
 
         private void Awake()
         {
@@ -30,9 +36,10 @@ namespace SniperProject
         {
             targetTransform = new GameObject().transform;
             targetTransform.name = gameObject.name + "_destination";
-            targetTransform.parent = LevelManager.Instance.DynamicTransform;
-
+            
+            targetTransform.SetParent(LevelManager.Instance.DynamicTransform);
             SetMovePosition(transform.position);
+            
             destinationSetter.target = targetTransform;
         }
 
@@ -47,6 +54,8 @@ namespace SniperProject
             {
                 return;
             }
+
+            //Add Turning stuff
 
             moveOrder.ArrivedAtDestination();
         }
@@ -64,7 +73,35 @@ namespace SniperProject
 
         public void SetMovePosition(Vector3 newMovePosition)
         {
+            //CreateTurningDestination(newMovePosition);
             targetTransform.position = newMovePosition;
+
+            Debug.DrawLine(transform.position, targetTransform.position, Color.magenta, 1f);
+        }
+
+
+        private void CreateTurningDestination(Vector2 newMovePosition)
+        {
+            targetDestinationPosition = newMovePosition;
+            Vector3 direction = targetDestinationPosition - (Vector2)transform.position;
+
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            // Check if the angle is greater than the maximum turning radius
+            float currentAngle = transform.eulerAngles.z;
+            float angleDifference = Mathf.DeltaAngle(currentAngle, targetAngle);
+            bool needsTurn = Mathf.Abs(angleDifference) > maxTurningRadius;
+
+
+            if (needsTurn)
+            {
+                Vector2 tempPosition = transform.position + Quaternion.Euler(0f, 0f, maxTurningRadius) * direction.normalized;
+                targetTransform.position = tempPosition;
+                return;
+            }
+
+            targetTransform.position = targetDestinationPosition;
+            
         }
 
     }
